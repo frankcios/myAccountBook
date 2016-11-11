@@ -16,8 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
+        // 設定導覽列背景顏色
+        UINavigationBar.appearance().barTintColor = UIColor(red: 255.0/255.0, green: 88.0/255.0, blue: 88.0/255.0, alpha: 1.0)
+        
+        // 設定導覽列字體
+        if let barFont = UIFont(name: "Avenir Next", size: 18.0) {
+            UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: barFont]
+        }
+        // 設定狀態列風格
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        // 設定導覽列返回按鈕顏色
+        UINavigationBar.appearance().tintColor = UIColor.white
+        
         return true
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -88,6 +102,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
+
+// 建立託管物件內容
+let ad = UIApplication.shared.delegate as! AppDelegate
+let context = ad.persistentContainer.viewContext
 
