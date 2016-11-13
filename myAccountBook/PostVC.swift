@@ -26,6 +26,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
     
     // 儲存音效開啟狀態
     let myUserDefaults = UserDefaults.standard
+    var soundOpen: Bool = false
     
     let dateFormatter = DateFormatter()
     
@@ -48,15 +49,22 @@ class PostVC: UIViewController, UITextFieldDelegate {
             
             loadRecordData()
             self.navigationItem.title = "更新"
-
+            
         } else {
             
             self.navigationItem.rightBarButtonItem = nil
             self.navigationItem.title = "新增"
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let open = myUserDefaults.object(forKey: "soundOpen") as? Int {
+            soundOpen = open == 1 ? true : false
+        }
         
         // 音效
-        if myUserDefaults.object(forKey: "soundOpen") as? Int == 1 {
+        if soundOpen {
             
             let addSoundPath = Bundle.main.path(forResource: "bottle_pop_3", ofType: "wav")
             let deleteSoundPath = Bundle.main.path(forResource: "cutting-paper-2", ofType: "mp3")
@@ -76,13 +84,15 @@ class PostVC: UIViewController, UITextFieldDelegate {
             addSound = nil
             deleteSound = nil
         }
+        
+        
     }
     
     // create
     @IBAction func insertBtnPressed(_ sender: UIButton) {
         
         var record: Record!
-    
+        
         if !(titleTextField.text?.isEmpty)! && !(amountTextField.text?.isEmpty)! {
             
             if recordToEdit == nil {
@@ -102,7 +112,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
             record.createDate = (record.createTime as NSString).substring(to: 10)
             
             ad.saveContext()
-    
+            
             _ = self.navigationController?.popViewController(animated: true)
             
             if myUserDefaults.object(forKey: "soundOpen") as? Int == 1 {
@@ -117,7 +127,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 self.dismiss(animated: true, completion: nil)
             }))
             present(alert, animated: true, completion: nil)
-
+            
         }
     }
     
@@ -139,15 +149,15 @@ class PostVC: UIViewController, UITextFieldDelegate {
             if self.myUserDefaults.object(forKey: "soundOpen") as? Int == 1 {
                 self.deleteSound.play()
             }
-
+            
         })
         
         let noAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
         alert.addAction(noAction)
         alert.addAction(yesAction)
-
+        
         present(alert, animated: true, completion: nil)
-
+        
     }
     
     func loadRecordData() {

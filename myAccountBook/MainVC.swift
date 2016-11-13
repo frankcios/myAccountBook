@@ -21,10 +21,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
     // 宣告日期變數
     var currentDate = Date()
     
-    // 儲存音效開啟狀態
-    let myUserDefaults = UserDefaults.standard
-    var soundOpen: Bool = false
-    
     // 輸出時間格式
     let dateFormatter = DateFormatter()
     
@@ -52,10 +48,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
     override func viewWillAppear(_ animated: Bool) {
         
         calculateTotalMoney()
-        
-        if let open = myUserDefaults.object(forKey: "soundOpen") as? Int {
-            soundOpen = open == 1 ? true : false
-        }
     }
     
     func attemptFetch() {
