@@ -16,7 +16,6 @@ extension Record {
         return NSFetchRequest<Record>(entityName: "Record");
     }
 
-    @NSManaged public var id: Int32
     @NSManaged public var title: String
     @NSManaged public var amount: Double
     @NSManaged public var yearMonth: String

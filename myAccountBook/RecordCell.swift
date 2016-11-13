@@ -11,11 +11,13 @@ import UIKit
 class RecordCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var createDateLbl: UILabel!
     
     func configureCell(record: Record) {
         
         titleLabel.text = record.title
-        priceLabel.text = String(format: "%g", record.amount)
+        amountLabel.text = String(format: "%g", record.amount)
+        createDateLbl.text = record.createDate
     }
 }

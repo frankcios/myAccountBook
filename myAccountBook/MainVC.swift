@@ -14,35 +14,19 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var currentMonthLbl: UILabel!
     @IBOutlet weak var totalLbl: UILabel!
-    
-    var days :[String]! = []
-    var myRecords :[String:[[String:String]]]! = [:]
-    
+    @IBOutlet weak var segment: UISegmentedControl!
     // 宣告 NSFetchedResultsController
     var controller: NSFetchedResultsController<Record>!
-    
-    var record: [Record] = []
-    
+        
     // 宣告日期變數
     var currentDate = Date()
     
+    // 儲存音效開啟狀態
     let myUserDefaults = UserDefaults.standard
+    var soundOpen: Bool = false
     
+    // 輸出時間格式
     let dateFormatter = DateFormatter()
-    
-    @IBAction func previousBtnPressed(_ sender: UIButton) {
-        
-        var dateComponets = DateComponents()
-        dateComponets.month = -1
-        self.updateCurrentDate(dateComponets)
-    }
-    
-    @IBAction func nextBtnPressed(_ sender: UIButton!) {
-        
-        var dateComponets = DateComponents()
-        dateComponets.month = 1
-        self.updateCurrentDate(dateComponets)
-    }
     
     @IBAction func addBtnPressed(_ sender: UIBarButtonItem) {
         
@@ -57,10 +41,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        // 日期格式設定
-        dateFormatter.dateFormat = "yyyy 年 MM 月"
-        currentMonthLbl.text = dateFormatter.string(from: currentDate)
     
         tableView.separatorColor = UIColor.init(red: 240.0/255.0, green: 240.0/255.0, blue: 240.0/255.0, alpha: 0.8)
         tableView.separatorInset = UIEdgeInsets.zero
@@ -71,90 +51,30 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
     
     override func viewWillAppear(_ animated: Bool) {
         
-        //calculateTotalMoney()
+        calculateTotalMoney()
         
-        let displayYearMonth = myUserDefaults.object(forKey: "displayYearMonth") as? String
-        if displayYearMonth != nil && displayYearMonth != "" {
-            dateFormatter.dateFormat = "yyyy-MM"
-            currentDate = dateFormatter.date(from: displayYearMonth!)!
-            
-            myUserDefaults.set("", forKey: "displayYearMonth")
-            myUserDefaults.synchronize()
+        if let open = myUserDefaults.object(forKey: "soundOpen") as? Int {
+            soundOpen = open == 1 ? true : false
         }
-        
-        updateRecordsList()
-    }
-    
-    func updateRecordsList() {
-        
-        dateFormatter.dateFormat = "yyyy-MM"
-        let yearMonth = dateFormatter.string(from: currentDate)
-       
-        days = []
-        myRecords = [:]
-        var total = 0.0
-
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Record")
-        
-        do {
-            
-            let results = try context.fetch(fetchRequest) as! [NSManagedObject]
-            
-            for result in results {
-                
-                total += result.value(forKey: "amount") as! Double
-                
-                let title = result.value(forKey: "title")
-                let amount = result.value(forKey: "amount")
-                let createDate = result.value(forKey: "createDate") as! String
-                print(createDate)
-                if createDate != "" {
-                    if !days.contains(createDate) {
-                        days.append(createDate)
-                        myRecords[createDate] = []
-                    }
-                    
-                    myRecords[createDate]?.append([
-                        "title":"\(title)",
-                        "amount":"\(amount)"
-                        ])
-                }
-                
-            }
-            
-            totalLbl.text = String(format: "%g",total)
-            
-            
-            dateFormatter.dateFormat = "yyyy 年 MM 月"
-            currentMonthLbl.text = dateFormatter.string(from: currentDate)
-
-            tableView.reloadData()
-
-
-        } catch {
-            
-            fatalError("\(error)")
-        }
-        
-
-    }
-    
-    // 切換月份
-    func updateCurrentDate(_ dateComponents :DateComponents) {
-        let calendar = Calendar.current
-        let newDate = (calendar as NSCalendar).date(byAdding: dateComponents, to: currentDate, options: NSCalendar.Options(rawValue: 0))
-        
-        currentDate = newDate!
-        
-        updateRecordsList()
     }
     
     func attemptFetch() {
         
-        let fetchRequest: NSFetchRequest<Record> = Record.fetchRequest()
+        let fetchRequest: NSFetchRequest = Record.fetchRequest()
         
-        let dateSort = NSSortDescriptor(key: "createDate", ascending: false)
-        fetchRequest.sortDescriptors = [dateSort]
+        let newDateSort = NSSortDescriptor(key: "createTime", ascending: false)
+        let oldDateSort = NSSortDescriptor(key: "createTime", ascending: true)
+
+        
+        if segment.selectedSegmentIndex == 0 {
+            
+            fetchRequest.sortDescriptors = [newDateSort]
+            
+        } else if segment.selectedSegmentIndex == 1 {
+            
+            fetchRequest.sortDescriptors = [oldDateSort]
+            
+        }
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         
@@ -178,16 +98,16 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         
         var total = 0.0
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Record")
+        let fetchRequest: NSFetchRequest = Record.fetchRequest()
         
         do {
             
-            let results = try context.fetch(fetchRequest) as! [NSManagedObject]
+            let results = try context.fetch(fetchRequest)
             
-            for result in results {
+            for record in results {
                 
-                total += result.value(forKey: "amount") as! Double
-                print(result.value(forKey: "yearMonth"))
+                total += record.amount
+                print("\(record.createDate) \(record.title) \(record.amount)")
             }
             
             totalLbl.text = String(format: "%g",total)
@@ -198,6 +118,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         }
     }
     
+    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
+        
+        attemptFetch()
+        tableView.reloadData()
+        
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -206,10 +132,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         }
         
         return 0
- 
-        /*
-        return days.count
- */
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -221,14 +143,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         }
         
         return 0
- /*
-        let date = days[section]
-        guard let records = myRecords[date] else {
-            return 0
-        }
-        
-        return records.count
-*/
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -251,12 +165,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-       
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
-        return 40
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "PostVC" {
@@ -270,7 +178,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFe
     
     func configureCell(cell: RecordCell, indexPath: NSIndexPath) {
         
-        // update cell
+        // 更新 cell
         let record = controller.object(at: indexPath as IndexPath)
         cell.configureCell(record: record)
         

@@ -8,18 +8,23 @@
 
 import UIKit
 import CoreData
+import AVFoundation
 
 class PostVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var priceTextField: UITextField!
+    @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var createTimeLbl: UILabel!
+    
+    var addSound: AVAudioPlayer!
+    var deleteSound: AVAudioPlayer!
     
     // 儲存要編輯的紀錄
     var recordToEdit: Record?
     
     var createTime = Date()
     
+    // 儲存音效開啟狀態
     let myUserDefaults = UserDefaults.standard
     
     let dateFormatter = DateFormatter()
@@ -28,9 +33,9 @@ class PostVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         // 金額輸入框
-        priceTextField.attributedPlaceholder = NSAttributedString(string: "金額", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
+        amountTextField.attributedPlaceholder = NSAttributedString(string: "金額", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         
-        priceTextField.delegate = self
+        amountTextField.delegate = self
         
         // 分類輸入框
         titleTextField.attributedPlaceholder = NSAttributedString(string: "分類", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
@@ -49,13 +54,36 @@ class PostVC: UIViewController, UITextFieldDelegate {
             self.navigationItem.rightBarButtonItem = nil
             self.navigationItem.title = "新增"
         }
+        
+        // 音效
+        if myUserDefaults.object(forKey: "soundOpen") as? Int == 1 {
+            
+            let addSoundPath = Bundle.main.path(forResource: "bottle_pop_3", ofType: "wav")
+            let deleteSoundPath = Bundle.main.path(forResource: "cutting-paper-2", ofType: "mp3")
+            
+            do {
+                addSound = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: addSoundPath!))
+                addSound.numberOfLoops = 0
+                
+                deleteSound = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: deleteSoundPath!))
+                deleteSound.numberOfLoops = 0
+                
+            } catch {
+                print("error")
+            }
+        } else {
+            
+            addSound = nil
+            deleteSound = nil
+        }
     }
     
+    // create
     @IBAction func insertBtnPressed(_ sender: UIButton) {
         
         var record: Record!
     
-        if !(titleTextField.text?.isEmpty)! && !(priceTextField.text?.isEmpty)! {
+        if !(titleTextField.text?.isEmpty)! && !(amountTextField.text?.isEmpty)! {
             
             if recordToEdit == nil {
                 
@@ -66,21 +94,20 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 record = recordToEdit
             }
             
+            // 設定欄位值
             record.title = titleTextField.text!
-            record.amount = (priceTextField.text?.toDouble())!
+            record.amount = (amountTextField.text?.toDouble())!
             record.createTime = createTimeLbl.text!
             record.yearMonth = (record.createTime as NSString).substring(to: 7)
             record.createDate = (record.createTime as NSString).substring(to: 10)
             
             ad.saveContext()
-            
-        
-            // 設定首頁要顯示這個記錄所屬的月份記錄列表
-            myUserDefaults.set(record.yearMonth, forKey: "displayYearMonth")
-            myUserDefaults.synchronize()
-            
+    
             _ = self.navigationController?.popViewController(animated: true)
             
+            if myUserDefaults.object(forKey: "soundOpen") as? Int == 1 {
+                addSound.play()
+            }
             
             
         } else {
@@ -92,9 +119,10 @@ class PostVC: UIViewController, UITextFieldDelegate {
             present(alert, animated: true, completion: nil)
 
         }
-        
     }
     
+    
+    // delete
     @IBAction func deleteBtnPressed(_ sender: UIBarButtonItem) {
         
         let alert = UIAlertController(title: "警告", message: "確定刪除此筆記錄？", preferredStyle: .alert)
@@ -107,6 +135,11 @@ class PostVC: UIViewController, UITextFieldDelegate {
             }
             self.dismiss(animated: true, completion: nil)
             _ = self.navigationController?.popViewController(animated: true)
+            
+            if self.myUserDefaults.object(forKey: "soundOpen") as? Int == 1 {
+                self.deleteSound.play()
+            }
+
         })
         
         let noAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
@@ -114,8 +147,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
         alert.addAction(yesAction)
 
         present(alert, animated: true, completion: nil)
-        
-        
+
     }
     
     func loadRecordData() {
@@ -124,7 +156,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
             
             titleTextField.text = record.title
             // 格式化輸出字串 以一般格式顯示
-            priceTextField.text = String(format: "%g", record.amount)
+            amountTextField.text = String(format: "%g", record.amount)
             createTimeLbl.text = record.createTime
         }
     }
