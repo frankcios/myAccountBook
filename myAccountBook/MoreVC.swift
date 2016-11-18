@@ -31,6 +31,7 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         
         // 音效開關
         mySwitch = UISwitch()
+        myUserDefaults.set(1, forKey: "soundOpen")
         soundOpen = myUserDefaults.object(forKey: "soundOpen") as? Int
         mySwitch.isOn = soundOpen == 1 ? true : false
         mySwitch.addTarget(self, action: #selector(MoreVC.onSwitchChanged), for: .touchUpInside)
@@ -41,16 +42,19 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         
         myUserDefaults.set( (sender.isOn ? 1 : 0 ), forKey: "soundOpen")
         myUserDefaults.synchronize()
-        
     }
-    
     
     func goFlatIcon() {
         
         let requestUrl = URL(string: "http://www.flaticon.com")
-        UIApplication.shared.open(requestUrl!, options: ["" : ""], completionHandler: nil)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(requestUrl!, options: ["" : ""], completionHandler: nil)
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
+    // Email
     func contactMe() {
         
         if !MFMailComposeViewController.canSendMail() {
@@ -107,8 +111,8 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         return 1
     }
 
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         cell.accessoryType = .none
