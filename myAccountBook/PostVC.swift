@@ -14,7 +14,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
-    @IBOutlet weak var createTimeLbl: UILabel!
+    @IBOutlet weak var createTimeTextField: UITextField!
     
     var addSound: AVAudioPlayer!
     var deleteSound: AVAudioPlayer!
@@ -27,6 +27,8 @@ class PostVC: UIViewController, UITextFieldDelegate {
     var soundOpen: Bool = false
     
     let dateFormatter = DateFormatter()
+    
+    var myDatePicker :UIDatePicker!
     
     var record: Record!
     
@@ -46,13 +48,21 @@ class PostVC: UIViewController, UITextFieldDelegate {
         
         // 取得現在時間
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        createTimeLbl.text = dateFormatter.string(from: createTime)
+        createTimeTextField.text = dateFormatter.string(from: createTime)
         
         // 按一下空白處隱藏編輯狀態
         let tap = UITapGestureRecognizer(target: self, action: #selector(PostVC.hideKeyboard(_:)))
         tap.cancelsTouchesInView = false
         // 為視圖加入監聽手勢
         self.view.addGestureRecognizer(tap)
+        
+        // UIPickerView
+        myDatePicker = UIDatePicker()
+        myDatePicker.datePickerMode = .dateAndTime
+        myDatePicker.locale = Locale(identifier: "zh_TW")
+        myDatePicker.addTarget(self, action: #selector(PostVC.selectDate), for: .valueChanged)
+        createTimeTextField.inputView = myDatePicker
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +77,8 @@ class PostVC: UIViewController, UITextFieldDelegate {
         
         if recordID > 0 {
             
+            self.navigationItem.title = "更新"
+            
             let fetchRequest: NSFetchRequest = Record.fetchRequest()
             
             let results = try? context.fetch(fetchRequest)
@@ -76,10 +88,11 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 titleTextField.text = record.title
                 // 格式化輸出字串 以一般格式顯示
                 amountTextField.text = String(format: "%g", record.amount)
-                createTimeLbl.text = record.createTime
+                createTimeTextField.text = record.createTime
+                
+                // 取得該筆記錄後將時間設定給datePicker顯示
+                myDatePicker.date = dateFormatter.date(from: record.createTime)!
             }
-            
-            self.navigationItem.title = "更新"
             
         } else {
             
@@ -128,7 +141,7 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 record.id = seq
                 record.title = titleTextField.text!
                 record.amount = Double(amountTextField.text!)!
-                record.createTime = createTimeLbl.text!
+                record.createTime = createTimeTextField.text!
                 record.yearMonth = (record.createTime as NSString).substring(to: 7)
                 record.createDate = (record.createTime as NSString).substring(to: 10)
                 
@@ -153,8 +166,11 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 
                 for record in results where record.id == recordID {
                     
-                    record.setValue(titleTextField.text, forKey: "title")
-                    record.setValue(Double(amountTextField.text!), forKey: "amount")
+                    record.title = titleTextField.text!
+                    record.amount = Double(amountTextField.text!)!
+                    record.createTime = createTimeTextField.text!
+                    record.yearMonth = (record.createTime as NSString).substring(to: 7)
+                    record.createDate = (record.createTime as NSString).substring(to: 10)
                 }
                 
                 ad.saveContext()
@@ -241,7 +257,15 @@ class PostVC: UIViewController, UITextFieldDelegate {
     func hideKeyboard(_ tapG: UITapGestureRecognizer?){
         self.view.endEditing(true)
     }
+    
+    
+    func selectDate(_ sender: UIDatePicker) {
+        
+        createTimeTextField.text = dateFormatter.string(from: myDatePicker.date)
+    }
+    
 }
+
 
 /*
 // String convert to Double

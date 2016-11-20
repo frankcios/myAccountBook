@@ -131,7 +131,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         var total = 0.0
         
         let fetchRequest: NSFetchRequest = Record.fetchRequest()
-        
+        let dateSort = NSSortDescriptor(key: "createDate", ascending: false)
+        fetchRequest.sortDescriptors = [dateSort]
         do {
             
             let results = try context.fetch(fetchRequest)
