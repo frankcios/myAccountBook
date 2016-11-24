@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		016007311DCE07F90064B7F7 /* RecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016007301DCE07F90064B7F7 /* RecordCell.swift */; };
 		017158431DD8398B003D3652 /* MoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017158421DD8398B003D3652 /* MoreVC.swift */; };
 		017158461DD85226003D3652 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 017158451DD85226003D3652 /* MessageUI.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		0171586F1DD87330003D3652 /* bottle_pop_3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0171586E1DD87330003D3652 /* bottle_pop_3.wav */; };
@@ -24,7 +23,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		016007301DCE07F90064B7F7 /* RecordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordCell.swift; sourceTree = "<group>"; };
 		017158421DD8398B003D3652 /* MoreVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreVC.swift; sourceTree = "<group>"; };
 		017158451DD85226003D3652 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		0171586E1DD87330003D3652 /* bottle_pop_3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = bottle_pop_3.wav; path = sounds/bottle_pop_3.wav; sourceTree = "<group>"; };
@@ -54,14 +52,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		016007321DCE07FE0064B7F7 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				016007301DCE07F90064B7F7 /* RecordCell.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
 		017158441DD85226003D3652 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,7 +81,6 @@
 			isa = PBXGroup;
 			children = (
 				01A974EF1DCB3B9900B522CD /* CoreData */,
-				016007321DCE07FE0064B7F7 /* View */,
 				01A974F11DCB3BC500B522CD /* Controller */,
 				01A974DA1DCB39BD00B522CD /* Main.storyboard */,
 				01F39F5B1DDDF48D00B93C21 /* Supporting Files */,
@@ -172,7 +161,7 @@
 				TargetAttributes = {
 					01A974D21DCB39BD00B522CD = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 7WBJ52MXCA;
+						DevelopmentTeam = 43L56WBEZP;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -219,7 +208,6 @@
 				01A974ED1DCB3AD800B522CD /* Record+CoreDataClass.swift in Sources */,
 				01A974D91DCB39BD00B522CD /* MainVC.swift in Sources */,
 				017158431DD8398B003D3652 /* MoreVC.swift in Sources */,
-				016007311DCE07F90064B7F7 /* RecordCell.swift in Sources */,
 				01A974DF1DCB39BD00B522CD /* myAccountBook.xcdatamodeld in Sources */,
 				01A974D71DCB39BD00B522CD /* AppDelegate.swift in Sources */,
 				01A974F31DCB414400B522CD /* PostVC.swift in Sources */,
@@ -347,7 +335,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7WBJ52MXCA;
+				DEVELOPMENT_TEAM = 43L56WBEZP;
 				INFOPLIST_FILE = myAccountBook/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -363,7 +351,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7WBJ52MXCA;
+				DEVELOPMENT_TEAM = 43L56WBEZP;
 				INFOPLIST_FILE = myAccountBook/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -15,7 +15,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var currentMonthLbl: UILabel!
     @IBOutlet weak var totalLbl: UILabel!
-    
+
     // 取得螢幕尺寸
     let fullSize: CGSize = UIScreen.main.bounds.size
     
@@ -87,6 +87,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         let displayYearMonth = myUserDefaults.object(forKey: "displayYearMonth") as? String
         if  displayYearMonth != nil && displayYearMonth != "" {
@@ -129,10 +130,12 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         days = []
         myRecords = [:]
         var total = 0.0
-        
+
         let fetchRequest: NSFetchRequest = Record.fetchRequest()
+        // 日期排序
         let dateSort = NSSortDescriptor(key: "createDate", ascending: false)
         fetchRequest.sortDescriptors = [dateSort]
+        
         do {
             
             let results = try context.fetch(fetchRequest)
@@ -269,7 +272,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-       return days[section]
+        return "  " + days[section]
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

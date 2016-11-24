@@ -31,7 +31,6 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         
         // 音效開關
         mySwitch = UISwitch()
-        myUserDefaults.set(1, forKey: "soundOpen")
         soundOpen = myUserDefaults.object(forKey: "soundOpen") as? Int
         mySwitch.isOn = soundOpen == 1 ? true : false
         mySwitch.addTarget(self, action: #selector(MoreVC.onSwitchChanged), for: .touchUpInside)
@@ -47,14 +46,10 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
     func goFlatIcon() {
         
         let requestUrl = URL(string: "http://www.flaticon.com")
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(requestUrl!, options: ["" : ""], completionHandler: nil)
-        } else {
-            // Fallback on earlier versions
-        }
+        UIApplication.shared.open(requestUrl!, options: ["" : ""], completionHandler: nil)
     }
     
-    // Email
+    // Mark: - Email
     func contactMe() {
         
         if !MFMailComposeViewController.canSendMail() {
@@ -65,9 +60,9 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         let composeVC = MFMailComposeViewController()
         composeVC.mailComposeDelegate = self
         
-        composeVC.setSubject("Contact dev")
+        composeVC.setSubject("聯絡開發者")
         composeVC.setToRecipients(["pk15678@gmail.com"])
-        composeVC.setMessageBody("Hello!", isHTML: false)
+        composeVC.setMessageBody("Build: \(buildVersion!)", isHTML: false)
         
         // present
         present(composeVC, animated: true, completion: nil)
@@ -142,6 +137,12 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         cell.clipsToBounds = true
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // 取消 cell 的選取狀態
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
