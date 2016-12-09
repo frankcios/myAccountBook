@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -29,6 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 設定導覽列返回按鈕顏色
         UINavigationBar.appearance().tintColor = UIColor.white
+        
+        // Notification
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { granted, error in
+        
+            // doNothing
+        })
         
         return true
         
@@ -108,4 +115,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 let ad = UIApplication.shared.delegate as! AppDelegate
 let context = ad.persistentContainer.viewContext
 
-let buildVersion = Bundle.main.infoDictionary!["CFBundleVersion"]
+let build = Bundle.main.infoDictionary!["CFBundleVersion"]
+let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"]

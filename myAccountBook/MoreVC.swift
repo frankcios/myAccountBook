@@ -62,7 +62,7 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         
         composeVC.setSubject("聯絡開發者")
         composeVC.setToRecipients(["pk15678@gmail.com"])
-        composeVC.setMessageBody("Build: \(buildVersion!)", isHTML: false)
+        composeVC.setMessageBody("app Version: \(version!) (\(build!))", isHTML: false)
         
         // present
         present(composeVC, animated: true, completion: nil)

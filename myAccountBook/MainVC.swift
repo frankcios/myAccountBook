@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import AVFoundation
+import UserNotifications
 
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -35,6 +36,9 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // 一天紀錄有幾筆
     var myRecords: [String:[[String:String]]]! = [:]
+    
+    // 每天的消費金額加總
+    var dayCost: [String:String]! = [:]
     
     @IBAction func previousBtnPressed(_ sender: UIButton?) {
         
@@ -84,6 +88,22 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.view.addGestureRecognizer(swipeRight)
         
 //        print(NSPersistentContainer.defaultDirectoryURL())
+        
+        // MARK : UserNotifications
+        let content = UNMutableNotificationContent()
+        content.title = ""
+        content.body = "早安，美好的早晨，今天記得記帳唷！"
+        content.badge = 0
+        content.sound = UNNotificationSound.default()
+        
+        
+        var date = DateComponents()
+        date.hour = 8
+        date.minute = 30
+        let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+        let request = UNNotificationRequest(identifier: "notification", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,7 +129,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let deleteSoundPath = Bundle.main.path(forResource: "cutting-paper-2", ofType: "mp3")
             
             do {
-                deleteSound = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: deleteSoundPath!))
+                deleteSound = try AVAudioPlayer(contentsOf: URL(fileURLWithPath:     deleteSoundPath!))
                 deleteSound.numberOfLoops = 0
                 
             } catch {
@@ -130,6 +150,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         days = []
         myRecords = [:]
         var total = 0.0
+        var okDayCost = 0.0
+        var newDayCost = 0.0
 
         let fetchRequest: NSFetchRequest = Record.fetchRequest()
         // 日期排序
@@ -159,7 +181,27 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         "title":"\(title)",
                         "amount":"\(amount)"
                         ])
+                   }
+                
+                for i in 0 ..< myRecords[createDate]!.count {
+                    
+                    okDayCost = Double((myRecords[createDate]?[i]["amount"])!)!
                 }
+                
+                // 用於判定加總金額停止點，不同時間點即停止
+                let saveCreateDate = myUserDefaults.object(forKey: "CreateDate") as! String
+                print(saveCreateDate)
+                if createDate == saveCreateDate {
+                    newDayCost += okDayCost
+                    dayCost[createDate] = String(newDayCost)
+                } else {
+                    newDayCost = 0.0
+                    newDayCost += okDayCost
+                    dayCost[createDate] = String(newDayCost)
+                }
+                // 儲存目前讀到的日期
+                myUserDefaults.set(createDate, forKey: "CreateDate")
+
 //                print(days)
 //                print(myRecords)
             }
@@ -272,7 +314,8 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return "  " + days[section]
+        let dayTotal = String(format: "%g", Double(dayCost[days[section]]!)!)
+        return "  " + days[section] + " " + "(共計\(dayTotal)元)"
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
