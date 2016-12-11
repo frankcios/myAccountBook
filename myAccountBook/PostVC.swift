@@ -160,6 +160,8 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 
                 // 設定首頁要顯示這個記錄所屬的月份記錄列表
                 myUserDefaults.set(record.yearMonth, forKey: "displayYearMonth")
+                // 設定判別統計金額的邊界標準
+                myUserDefaults.set(record.createDate , forKey: "CreateDate")
                 myUserDefaults.synchronize()
                 
             } else {

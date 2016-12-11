@@ -109,6 +109,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // 決定顯示月份資料
         let displayYearMonth = myUserDefaults.object(forKey: "displayYearMonth") as? String
         if  displayYearMonth != nil && displayYearMonth != "" {
             dateFormatter.dateFormat = "yyyy-MM"
@@ -189,16 +190,19 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 }
                 
                 // 用於判定加總金額停止點，不同時間點即停止
-                let saveCreateDate = myUserDefaults.object(forKey: "CreateDate") as! String
-                print(saveCreateDate)
-                if createDate == saveCreateDate {
-                    newDayCost += okDayCost
-                    dayCost[createDate] = String(newDayCost)
-                } else {
-                    newDayCost = 0.0
-                    newDayCost += okDayCost
-                    dayCost[createDate] = String(newDayCost)
+                
+                if let preSaveCreateDate = myUserDefaults.object(forKey: "CreateDate") {
+                    if createDate == preSaveCreateDate as! String{
+                        newDayCost += okDayCost
+                        dayCost[createDate] = String(newDayCost)
+                    } else {
+                        newDayCost = 0.0
+                        newDayCost += okDayCost
+                        dayCost[createDate] = String(newDayCost)
+                    }
                 }
+//                print(saveCreateDate)
+                
                 // 儲存目前讀到的日期
                 myUserDefaults.set(createDate, forKey: "CreateDate")
 
@@ -314,8 +318,11 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        let dayTotal = String(format: "%g", Double(dayCost[days[section]]!)!)
-        return "  " + days[section] + " " + "(共計\(dayTotal)元)"
+        if dayCost[days[section]] != nil {
+            let dayTotal = String(format: "%g", Double(dayCost[days[section]]!)!)
+            return "  " + days[section] + " " + "(共計\(dayTotal)元)"
+        }
+        return "  " + days[section]
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
