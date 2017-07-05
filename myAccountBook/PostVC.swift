@@ -10,87 +10,90 @@ import UIKit
 import CoreData
 import AVFoundation
 
-class PostVC: UIViewController, UITextFieldDelegate {
+class PostVC: UIViewController {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var createTimeTextField: UITextField!
-    @IBOutlet weak var saveBtn: UIButton!
     
+    @IBOutlet weak var saveBtn: UIButton! {
+        didSet {
+            // 儲存按鈕
+            saveBtn.layer.cornerRadius = 20
+            saveBtn.layer.masksToBounds = true
+            saveBtn.layer.borderWidth = 1.5
+            saveBtn.layer.borderColor = UIColor.white.cgColor
+        }
+    }
+    
+    var myDatePicker :UIDatePicker! {
+        didSet {
+            // UIPickerView
+            myDatePicker = UIDatePicker()
+            myDatePicker.datePickerMode = .dateAndTime
+            myDatePicker.locale = Locale(identifier: "zh_TW")
+            myDatePicker.addTarget(self, action: #selector(PostVC.selectDate), for: .valueChanged)
+            // 把DatePicker嵌入在TextField中
+            createTimeTextField.inputView = myDatePicker
+        }
+    }
+    
+    // MARK: - date variable
+    var createTime = Date()
+    let dateFormatter = DateFormatter()
+    
+    // MARK: - sound variable
     var addSound: AVAudioPlayer!
     var deleteSound: AVAudioPlayer!
-    
-    // 創建記錄時間
-    var createTime = Date()
     
     // 儲存音效開啟狀態
     let myUserDefaults = UserDefaults.standard
     var soundOpen: Bool = false
     
-    let dateFormatter = DateFormatter()
-    
-    var myDatePicker :UIDatePicker!
-    
+    // MARK: - record variable
     var record: Record!
-    
     var recordID: Int32?
     
+    // MARK: 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupViews()
+    }
+    
+    fileprivate func setupViews() {
+        // 分類輸入框
+        titleTextField.attributedPlaceholder = NSAttributedString(string: "分類", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         
         // 金額輸入框
         amountTextField.attributedPlaceholder = NSAttributedString(string: "金額", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         
         amountTextField.delegate = self
         
-        // 分類輸入框
-        titleTextField.attributedPlaceholder = NSAttributedString(string: "分類", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
-        
-        // 儲存按鈕
-        saveBtn.layer.cornerRadius = 20
-        saveBtn.layer.borderWidth = 1.5
-        saveBtn.layer.borderColor = UIColor.white.cgColor
-        
-        
         // 取得現在時間
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        createTimeTextField.text = dateFormatter.string(from: createTime)
+        createTimeTextField.text = dateFormatter.stringWith(format: "yyyy-MM-dd HH:mm", date: createTime)
         
         // 按一下空白處隱藏編輯狀態
         let tap = UITapGestureRecognizer(target: self, action: #selector(PostVC.hideKeyboard(_:)))
         tap.cancelsTouchesInView = false
         // 為視圖加入監聽手勢
         self.view.addGestureRecognizer(tap)
-        
-        // UIPickerView
-        myDatePicker = UIDatePicker()
-        myDatePicker.datePickerMode = .dateAndTime
-        myDatePicker.locale = Locale(identifier: "zh_TW")
-        myDatePicker.addTarget(self, action: #selector(PostVC.selectDate), for: .valueChanged)
-        createTimeTextField.inputView = myDatePicker
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         if let open = myUserDefaults.object(forKey: "soundOpen") as? Int {
             soundOpen = open == 1 ? true : false
         }
         
         let recordID = Int32(myUserDefaults.integer(forKey: "postID"))
-        
         //        print(recordID)
         
         if recordID > 0 {
-            
             self.navigationItem.title = "更新"
-            
             let fetchRequest: NSFetchRequest = Record.fetchRequest()
-            
             let results = try? context.fetch(fetchRequest)
             
             for record in results! where record.id == recordID {
-                
                 titleTextField.text = record.title
                 // 格式化輸出字串 以一般格式顯示
                 amountTextField.text = String(format: "%g", record.amount)
@@ -99,16 +102,17 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 // 取得該筆記錄後將時間設定給datePicker顯示
                 myDatePicker.date = dateFormatter.date(from: record.createTime)!
             }
-            
         } else {
-            
+            // 如果是新增資料時，隱藏刪除按鈕
             self.navigationItem.rightBarButtonItem = nil
             self.navigationItem.title = "新增"
         }
-        
+        setupAudio()
+    }
+    
+    func setupAudio() {
         // 音效
         if soundOpen {
-            
             let addSoundPath = Bundle.main.path(forResource: "bottle_pop_3", ofType: "wav")
             let deleteSoundPath = Bundle.main.path(forResource: "cutting-paper-2", ofType: "mp3")
             
@@ -118,40 +122,38 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 
                 deleteSound = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: deleteSoundPath!))
                 deleteSound.numberOfLoops = 0
-                
             } catch {
                 print("error")
             }
         } else {
-            
             addSound = nil
             deleteSound = nil
         }
+
     }
-    
-    // save
+
+    // 儲存紀錄
     @IBAction func saveBtnPressed(_ sender: UIButton) {
     
         if !(titleTextField.text?.isEmpty)! && !(amountTextField.text?.isEmpty)! {
             
             if myUserDefaults.integer(forKey: "postID") == 0 {
-                
                 record = Record(context: context)
-                
+            
                 // ID Auto increment
                 var seq: Int32 = 1
                 let idSeq = myUserDefaults.integer(forKey: "seq")
-                seq = idSeq + 1
+                seq = Int32(idSeq + 1)
                 
                 // 設定欄位值
-                record.id = seq
+                record.id = Int32(seq)
                 record.title = titleTextField.text!
                 record.amount = Double(amountTextField.text!) ?? 0
                 record.createTime = createTimeTextField.text!
                 record.yearMonth = (record.createTime as NSString).substring(to: 7)
                 record.createDate = (record.createTime as NSString).substring(to: 10)
                 
-                //            print("\(record.id) \(record.title) \(record.amount) \(record.yearMonth) \(record.createDate) \(record.createTime)")
+//                print("\(record.id) \(record.title) \(record.amount) \(record.yearMonth) \(record.createDate) \(record.createTime)")
                 
                 ad.saveContext()
                 
@@ -165,15 +167,11 @@ class PostVC: UIViewController, UITextFieldDelegate {
                 myUserDefaults.synchronize()
                 
             } else {
-                
                 let recordID = Int32(self.myUserDefaults.integer(forKey: "postID"))
-                
                 let fetchRequest: NSFetchRequest = Record.fetchRequest()
-                
                 let results = try! context.fetch(fetchRequest)
                 
                 for record in results where record.id == recordID {
-                    
                     record.title = titleTextField.text!
                     record.amount = Double(amountTextField.text!)!
                     record.createTime = createTimeTextField.text!
@@ -190,34 +188,26 @@ class PostVC: UIViewController, UITextFieldDelegate {
             _ = self.navigationController?.popViewController(animated: true)
             
         } else {
-            
             let alert = UIAlertController(title: "警告", message: "輸入框不可為空", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "確定", style: .default, handler: { (UIAlertAction) in
                 self.dismiss(animated: true, completion: nil)
             }))
             present(alert, animated: true, completion: nil)
-            
         }
     }
-    
-    // delete
+
+    // 刪除紀錄
     @IBAction func deleteBtnPressed(_ sender: UIBarButtonItem) {
-        
         let alert = UIAlertController(title: "警告", message: "確定刪除此筆記錄？", preferredStyle: .alert)
         
-        // 刪除資料
-        let yesAction = UIAlertAction(title: "確定", style: .default, handler: { (Action) in
-            
+        // 按下刪除後做的事
+        let yesAction = UIAlertAction(title: "確定", style: .default, handler: { (action) in
             let recordID = Int32(self.myUserDefaults.integer(forKey: "postID"))
-            
             if recordID > 0 {
-                
                 let fetchRequest: NSFetchRequest = Record.fetchRequest()
-                
                 let results = try! context.fetch(fetchRequest)
                 
                 for record in results where record.id == recordID {
-                    
                     context.delete(record)
                 }
                 ad.saveContext()
@@ -228,7 +218,6 @@ class PostVC: UIViewController, UITextFieldDelegate {
             if self.soundOpen {
                 self.deleteSound.play()
             }
-            
         })
         
         let noAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
@@ -236,38 +225,15 @@ class PostVC: UIViewController, UITextFieldDelegate {
         alert.addAction(yesAction)
         
         present(alert, animated: true, completion: nil)
-        
-    }
-    
-    // 金額只能有一個小數點
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField.tag == 101 {
-            let oldString = textField.text as NSString? ?? ""
-            let newString = oldString.replacingCharacters(in: range, with: string)
-            var count = 0
-            for c in newString.characters {
-                if c == "." {
-                    count = count + 1
-                }
-            }
-            
-            if count > 1 {
-                return false
-            }
-        }
-        
-        return true
     }
 
     // 按空白處會隱藏編輯狀態
-    func hideKeyboard(_ tapG: UITapGestureRecognizer?){
+    func hideKeyboard(_ tapG: UITapGestureRecognizer?) {
         self.view.endEditing(true)
     }
     
     // datePicker
     func selectDate(_ sender: UIDatePicker) {
-        
         createTimeTextField.text = dateFormatter.string(from: myDatePicker.date)
     }
-    
 }

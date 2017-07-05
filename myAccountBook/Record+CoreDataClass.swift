@@ -10,6 +10,16 @@ import Foundation
 import CoreData
 
 
-public class Record: NSManagedObject {
-
+final class Record: NSManagedObject {
+    
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Record> {
+        return NSFetchRequest<Record>(entityName: "Record");
+    }
+    
+    @NSManaged public var id: Int32
+    @NSManaged public var title: String
+    @NSManaged public var amount: Double
+    @NSManaged public var yearMonth: String
+    @NSManaged public var createDate: String
+    @NSManaged public var createTime: String
 }

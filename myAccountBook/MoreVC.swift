@@ -25,6 +25,10 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
+    }
+    
+    fileprivate func setupViews() {
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -66,7 +70,6 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         
         // present
         present(composeVC, animated: true, completion: nil)
-
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -74,28 +77,19 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         switch (result)
         {
         case .cancelled:
-            
             print("Mail Cancelled")
-            
         case .saved:
-            
             print("Mail Saved")
-            
         case .sent:
-            
             print("Mail Sent")
-            
         case .failed:
-            
             print("Mail sent failure: \(error.debugDescription)")
         }
         
         dismiss(animated: true, completion: nil)
-        
     }
 
-    // MARK: - Table view data source
-
+    // MARK: - UITableViewDelegate
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return 3
