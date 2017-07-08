@@ -88,11 +88,15 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         
         dismiss(animated: true, completion: nil)
     }
+    
+    func pushToChartVC() {
+        performSegue(withIdentifier: "showChart", sender: nil)
+    }
 
     // MARK: - UITableViewDelegate
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        return 3
+        return 4
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -112,23 +116,22 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
             
         } else if indexPath.section == 1 {
             
-            let flatIconBtn = UIButton(frame: CGRect(x: 15, y: 0, width: fullSize.width, height: 40))
-            flatIconBtn.addTarget(self, action: #selector(MoreVC.goFlatIcon), for: .touchUpInside)
-            flatIconBtn.setTitle("FLATICON", for: .normal)
-            flatIconBtn.setTitleColor(UIColor.black, for: .normal)
-            flatIconBtn.contentHorizontalAlignment = .left
+            let frame = CGRect(x: 15, y: 0, width: fullSize.width, height: 40)
+            let flatIconBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.goFlatIcon), title: "FLATICON", color: UIColor.black)
             cell.contentView.addSubview(flatIconBtn)
             
         } else if indexPath.section == 2 {
             
-            let contactBtn = UIButton(frame: CGRect(x: 15, y: 0, width: fullSize.width, height: 40))
-            contactBtn.addTarget(self, action: #selector(MoreVC.contactMe), for: .touchUpInside)
-            contactBtn.setTitle("寄信給開發者", for: .normal)
-            contactBtn.setTitleColor(UIColor.black, for: .normal)
-            contactBtn.contentHorizontalAlignment = .left
+            let frame = CGRect(x: 15, y: 0, width: fullSize.width, height: 40)
+            let contactBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.contactMe), title: "寄信給開發者", color: UIColor.black)
             cell.contentView.addSubview(contactBtn)
+            
+        } else if indexPath.section == 3 {
+            
+            let frame = CGRect(x: 15, y: 0, width: fullSize.width, height: 40)
+            let chartBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.pushToChartVC), title: "圖表分析", color: UIColor.black)
+            cell.contentView.addSubview(chartBtn)
         }
-        cell.clipsToBounds = true
         
         return cell
     }
@@ -141,11 +144,13 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        var title = "聯絡"
+        var title = "圖表"
         if section == 0 {
             title = "設定"
         } else if section == 1 {
             title = "圖片來源"
+        } else if section == 2 {
+            title = "聯絡"
         }
         
         return title

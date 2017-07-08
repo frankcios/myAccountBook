@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import AVFoundation
 
-class PostVC: UIViewController {
+class PostVC: BaseVC {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
@@ -26,28 +26,20 @@ class PostVC: UIViewController {
         }
     }
     
-    var myDatePicker :UIDatePicker! {
-        didSet {
-            // UIPickerView
-            myDatePicker = UIDatePicker()
-            myDatePicker.datePickerMode = .dateAndTime
-            myDatePicker.locale = Locale(identifier: "zh_TW")
-            myDatePicker.addTarget(self, action: #selector(PostVC.selectDate), for: .valueChanged)
-            // 把DatePicker嵌入在TextField中
-            createTimeTextField.inputView = myDatePicker
-        }
-    }
-    
-    // MARK: - date variable
-    var createTime = Date()
-    let dateFormatter = DateFormatter()
+    var myDatePicker: UIDatePicker = {
+        // UIPickerView
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.locale = Locale(identifier: "zh_TW")
+        datePicker.addTarget(self, action: #selector(PostVC.selectDate), for: .valueChanged)
+        return datePicker
+    }()
     
     // MARK: - sound variable
     var addSound: AVAudioPlayer!
     var deleteSound: AVAudioPlayer!
     
     // 儲存音效開啟狀態
-    let myUserDefaults = UserDefaults.standard
     var soundOpen: Bool = false
     
     // MARK: - record variable
@@ -71,7 +63,9 @@ class PostVC: UIViewController {
         amountTextField.delegate = self
         
         // 取得現在時間
-        createTimeTextField.text = dateFormatter.stringWith(format: "yyyy-MM-dd HH:mm", date: createTime)
+        createTimeTextField.text = dateFormatter.stringWith(format: "yyyy-MM-dd HH:mm", date: currentDate)
+        // 把DatePicker嵌入在TextField中
+        createTimeTextField.inputView = myDatePicker
         
         // 按一下空白處隱藏編輯狀態
         let tap = UITapGestureRecognizer(target: self, action: #selector(PostVC.hideKeyboard(_:)))
@@ -98,7 +92,6 @@ class PostVC: UIViewController {
                 // 格式化輸出字串 以一般格式顯示
                 amountTextField.text = String(format: "%g", record.amount)
                 createTimeTextField.text = record.createTime
-                
                 // 取得該筆記錄後將時間設定給datePicker顯示
                 myDatePicker.date = dateFormatter.date(from: record.createTime)!
             }
@@ -129,7 +122,6 @@ class PostVC: UIViewController {
             addSound = nil
             deleteSound = nil
         }
-
     }
 
     // 儲存紀錄
@@ -188,7 +180,7 @@ class PostVC: UIViewController {
             _ = self.navigationController?.popViewController(animated: true)
             
         } else {
-            let alert = UIAlertController(title: "警告", message: "輸入框不可為空", preferredStyle: .alert)
+            let alert = UIAlertController(title: "未輸入分類或金額", message: "請輸入分類與金額", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "確定", style: .default, handler: { (UIAlertAction) in
                 self.dismiss(animated: true, completion: nil)
             }))

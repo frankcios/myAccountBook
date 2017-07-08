@@ -1,0 +1,39 @@
+
+/* Class = "UITextField"; text = "2016-10-10 16:35"; ObjectID = "6M1-RQ-zb2"; */
+"6M1-RQ-zb2.text" = "2016-10-10 16:35";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "BWt-1E-grD"; */
+"BWt-1E-grD.text" = "Detail";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "D9Q-ic-Ipt"; */
+"D9Q-ic-Ipt.text" = "Title";
+
+/* Class = "UITextField"; placeholder = "分類"; ObjectID = "HAW-sp-bBK"; */
+"HAW-sp-bBK.placeholder" = "分類";
+
+/* Class = "UILabel"; text = "2016 年 11 月"; ObjectID = "KWm-5W-6fU"; */
+"KWm-5W-6fU.text" = "2016 年 11 月";
+
+/* Class = "UIViewController"; title = "關於"; ObjectID = "Ndw-Ke-7oM"; */
+"Ndw-Ke-7oM.title" = "關於";
+
+/* Class = "UINavigationItem"; title = "記帳小幫手"; ObjectID = "NoS-wB-rgo"; */
+"NoS-wB-rgo.title" = "記帳小幫手";
+
+/* Class = "UILabel"; text = "元"; ObjectID = "Pph-Pf-tV4"; */
+"Pph-Pf-tV4.text" = "元";
+
+/* Class = "UILabel"; text = "總計"; ObjectID = "Wci-Wr-bcz"; */
+"Wci-Wr-bcz.text" = "總計";
+
+/* Class = "UILabel"; text = "$"; ObjectID = "eeb-O9-a0E"; */
+"eeb-O9-a0E.text" = "$";
+
+/* Class = "UITextField"; placeholder = "金額"; ObjectID = "l7B-NX-YAR"; */
+"l7B-NX-YAR.placeholder" = "金額";
+
+/* Class = "UINavigationItem"; title = "新增/更新"; ObjectID = "yDK-sx-7uo"; */
+"yDK-sx-7uo.title" = "新增/更新";
+
+/* Class = "UIButton"; normalTitle = "儲存"; ObjectID = "ytz-CZ-dpG"; */
+"ytz-CZ-dpG.normalTitle" = "儲存";

@@ -11,20 +11,11 @@ import CoreData
 import AVFoundation
 import UserNotifications
 
-class MainVC: UIViewController {
+class MainVC: BaseVC {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var currentMonthLbl: UILabel!
     @IBOutlet weak var totalLbl: UILabel!
-
-    // 宣告日期變數
-    var currentDate = Date()
-    
-    // 輸出時間格式
-    let dateFormatter = DateFormatter()
-    
-    // 儲存音效開啟狀態
-    let myUserDefaults = UserDefaults.standard
     
     var deleteSound: AVAudioPlayer!
     
@@ -62,7 +53,7 @@ class MainVC: UIViewController {
         createUserNotifications()
         addSwipeGestureRecognizer()
         
-        //print(NSPersistentContainer.defaultDirectoryURL())
+//        print(NSPersistentContainer.defaultDirectoryURL())
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,7 +110,7 @@ class MainVC: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "返回", style: .plain, target: nil, action: nil)
         
         // 設定tableView分隔線
-        tableView.separatorColor = UIColor.init(red: 240.0/255.0, green: 240.0/255.0, blue: 240.0/255.0, alpha: 0.8)
+        tableView.separatorColor = UIColor(red: 240.0/255.0, green: 240.0/255.0, blue: 240.0/255.0, alpha: 0.8)
         tableView.separatorInset = UIEdgeInsets.zero
         
         tableView.delegate = self
@@ -214,6 +205,8 @@ class MainVC: UIViewController {
 //                print(days)
 //                print(myRecords)
             }
+//            print(days)
+//            print(myRecords)
             
             totalLbl.text = String(format: "%g",total)
             currentMonthLbl.text = dateFormatter.stringWith(format: "yyyy 年 MM 月", date: currentDate)
@@ -225,16 +218,12 @@ class MainVC: UIViewController {
     }
     
     // MARK: 更新月份
-    func updateCurrentDate(_ dateComponents :DateComponents) {
-        let calendar = Calendar.current
-        let newDate = (calendar as NSCalendar).date(byAdding: dateComponents, to: currentDate, options: NSCalendar.Options(rawValue: 0))
-        
-        currentDate = newDate!
-        
+    override func updateCurrentDate(_ dateComponents :DateComponents) {
+        super.updateCurrentDate(dateComponents)
+    
         currentMonthLbl.text = dateFormatter.stringWith(format: "yyyy 年 MM 月", date: currentDate)
         updateRecordsList()
     }
-    
     
     func swipe(_ recognizer: UISwipeGestureRecognizer) {
         
