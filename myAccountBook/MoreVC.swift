@@ -22,6 +22,10 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
     
     @IBOutlet weak var tableView: UITableView!
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,7 +33,7 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
     }
     
     fileprivate func setupViews() {
-        
+                
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -53,7 +57,6 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         UIApplication.shared.open(requestUrl!, options: ["" : ""], completionHandler: nil)
     }
     
-    // Mark: - Email
     func contactMe() {
         
         if !MFMailComposeViewController.canSendMail() {
@@ -72,6 +75,28 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         present(composeVC, animated: true, completion: nil)
     }
     
+    func setLimitCost() {
+        
+        let alert = UIAlertController(title: "每月限制金額", message: "請輸入金額 (顯示在圖表上的紅色虛線)", preferredStyle: .alert)
+        
+        // 添加textfield
+        alert.addTextField(configurationHandler: nil)
+        alert.textFields?[0].keyboardType = .numberPad
+        alert.textFields?[0].text = myUserDefaults.string(forKey: "limitCost")
+
+        let okAction = UIAlertAction(title: "確定", style: .default) { (action) in
+            self.myUserDefaults.set(alert.textFields?[0].text, forKey: "limitCost")
+            self.myUserDefaults.synchronize()
+        }
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
+        
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // Mark: - MFMailComposeViewControllerDelegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         
         switch (result)
@@ -88,12 +113,8 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         
         dismiss(animated: true, completion: nil)
     }
-    
-    func pushToChartVC() {
-        performSegue(withIdentifier: "showChart", sender: nil)
-    }
 
-    // MARK: - UITableViewDelegate
+    // MARK: - UITableViewDataSource
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return 4
@@ -106,7 +127,9 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cellId = "Cell"
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
 
         cell.accessoryType = .none
         
@@ -129,22 +152,16 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         } else if indexPath.section == 3 {
             
             let frame = CGRect(x: 15, y: 0, width: fullSize.width, height: 40)
-            let chartBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.pushToChartVC), title: "圖表分析", color: UIColor.black)
-            cell.contentView.addSubview(chartBtn)
+            let limitCostBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.setLimitCost), title: "設定限制金額", color: UIColor.black)
+            cell.contentView.addSubview(limitCostBtn)
         }
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        // 取消 cell 的選取狀態
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        var title = "圖表"
+        var title = "每月限制金額"
         if section == 0 {
             title = "設定"
         } else if section == 1 {
@@ -154,6 +171,13 @@ class MoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMa
         }
         
         return title
+    }
+    
+    // MARK: - UITableViewDelegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // 取消 cell 的選取狀態
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

@@ -51,7 +51,9 @@ class MainVC: BaseVC {
         
         setupViews()
         createUserNotifications()
-        addSwipeGestureRecognizer()
+        
+        if myUserDefaults.double(forKey: "limitCost") != 0.0 { return }
+        myUserDefaults.set(5000.0, forKey: "limitCost")
         
 //        print(NSPersistentContainer.defaultDirectoryURL())
     }
@@ -91,18 +93,6 @@ class MainVC: BaseVC {
         } else {
             deleteSound = nil
         }
-    }
-    
-    func addSwipeGestureRecognizer() {
-        // 向左滑動手勢
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe(_:)))
-        swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        // 向右滑動手勢
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.swipe(_:)))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
     }
     
     func setupViews() {
@@ -165,9 +155,9 @@ class MainVC: BaseVC {
                 total += result.value(forKey: "amount") as! Double
                 let id = result.value(forKey: "id") as! Int32
                 let title = result.value(forKey: "title") as! String
-                let amount = String(format: "%g", (result.value(forKey: "amount") as! Double) )
+                let amount = String(format: "%g", (result.value(forKey: "amount") as! Double))
                 let createDate = result.value(forKey: "createDate") as! String
-                //print("\(title) \(amount) \(createDate) \(yearMonth)")
+                
                 if createDate != "" {
                     if !days.contains(createDate) {
                         days.append(createDate)
@@ -197,16 +187,11 @@ class MainVC: BaseVC {
                         dayCost[createDate] = String(newDayCost)
                     }
                 }
-                //print(saveCreateDate)
                 
                 // 儲存目前讀到的日期
                 myUserDefaults.set(createDate, forKey: "CreateDate")
 
-//                print(days)
-//                print(myRecords)
             }
-//            print(days)
-//            print(myRecords)
             
             totalLbl.text = String(format: "%g",total)
             currentMonthLbl.text = dateFormatter.stringWith(format: "yyyy 年 MM 月", date: currentDate)
@@ -223,15 +208,6 @@ class MainVC: BaseVC {
     
         currentMonthLbl.text = dateFormatter.stringWith(format: "yyyy 年 MM 月", date: currentDate)
         updateRecordsList()
-    }
-    
-    func swipe(_ recognizer: UISwipeGestureRecognizer) {
-        
-        if recognizer.direction == .left {
-            nextBtnPressed(nil)
-        } else if recognizer.direction == .right {
-            previousBtnPressed(nil)
-        }
     }
 }
 

@@ -13,11 +13,16 @@ import CoreData
 class ChartVC: BaseVC {
     
     @IBOutlet weak var barChartView: BarChartView!
+    @IBOutlet weak var yearLabel: UILabel!
     
     let months = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月",]
     var costs: [Double]!
 
     var perMonthCost: [String:[[String:String]]]! = [:]
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     @IBAction func prevYear(_ sender: UIButton!) {
         var dateComponets = DateComponents()
@@ -37,18 +42,18 @@ class ChartVC: BaseVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         updateUI()
     }
     
     func updateUI() {
-        setNavTitle()
         fetchYearRecord()
         setChart(dataPoints: months, value: costs)
-    }
-    
-    func setNavTitle() {
-        title = dateFormatter.stringWith(format: "yyyy 年", date: currentDate)
+        yearLabel.text = dateFormatter.stringWith(format: "yyyy 年", date: currentDate)
     }
     
     func fetchYearRecord() {
@@ -68,36 +73,38 @@ class ChartVC: BaseVC {
             let results = try context.fetch(fetchRequest)
             for result in results where result.yearMonth.subString(from: 0, to: 3) == "\(year)" {
                 
+                // 取得此筆紀錄的日期＆月份
+                // e.g. 2017-06-06
                 let createDate = result.value(forKey: "createDate") as! String
+                let createMonth = createDate.subString(from: 5, to: 6)
+                var preSaveCreateMonth = myUserDefaults.string(forKey: "createMonth")
                 
-                if let preSaveCreateMonth = myUserDefaults.object(forKey: "createMonth") {
-                    let resultMonth = result.createDate.subString(from: 5, to: 6)
+                if preSaveCreateMonth != createMonth {
+                    preSaveCreateMonth = createMonth
                     
-                    if resultMonth == preSaveCreateMonth as! String {
-                        tempCost += result.value(forKey: "amount") as! Double
-                    } else {
-                        tempCost = 0
-                        tempCost += result.value(forKey: "amount") as! Double
+                    tempCost = 0
+                    tempCost += result.value(forKey: "amount") as! Double
+                } else {
+                    tempCost += result.value(forKey: "amount") as! Double
+                }
+                
+                if createMonth != "" {
+                    
+                    if perMonthCost[createMonth] == nil {
+                        perMonthCost[createMonth] = []
                     }
                     
-                    let monthStr = createDate.subString(from: 5, to: 6)
-                    if monthStr != "" {
-                        
-                        if perMonthCost[monthStr] == nil {
-                            perMonthCost[monthStr] = []
-                        }
-                        
-                        perMonthCost[monthStr]?.append([
-                            "month":"\(createDate.subString(from: 5, to: 6))",
-                            "cost":"\(tempCost)"
-                            ])
-                    }
+                    perMonthCost[createMonth]?.append([
+                        "month":"\(createMonth)",
+                        "cost":"\(tempCost)"
+                        ])
                 }
                 
                 // 儲存目前讀到的月份
-                myUserDefaults.set(createDate.subString(from: 5, to: 6), forKey: "createMonth")
+                myUserDefaults.set(createMonth, forKey: "createMonth")
             }
             
+            // 字典內有成員才進行金額累計
             if perMonthCost.count != 0 {
                 for key in perMonthCost.keys {
                     for i in 0..<perMonthCost[key]!.count {
@@ -162,13 +169,20 @@ class ChartVC: BaseVC {
             leftAxis.valueFormatter = MyAxisValueFormatter()
             
             // 限制線
-            let chartLimitLine = ChartLimitLine(limit: 5000.0)
+            let limitCost = myUserDefaults.double(forKey: "limitCost")
+            print(limitCost)
+            let chartLimitLine = ChartLimitLine(limit: limitCost)
             chartLimitLine.lineWidth = 2
             chartLimitLine.lineDashLengths = [5.0, 5.0]
             chartLimitLine.labelPosition = .rightTop
+            // 有舊的限制線先移除
+            if leftAxis.limitLines.count != 0 {
+                leftAxis.removeLimitLine(leftAxis.limitLines[0])
+            }
             leftAxis.addLimitLine(chartLimitLine)
             leftAxis.drawLimitLinesBehindDataEnabled = false
             
+            // 設定數據源
             barChartView.data = chartData
             
             // 動畫

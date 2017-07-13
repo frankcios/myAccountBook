@@ -25,6 +25,12 @@ class BaseVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        currentDate = Date()
+    }
+    
     // MARK: 更新月份
     func updateCurrentDate(_ dateComponents :DateComponents) {
         let calendar = Calendar.current

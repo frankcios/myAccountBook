@@ -9,6 +9,7 @@
 import UIKit
 
 extension UIButton {
+    
     class func buttonWith(frame: CGRect, target: Any?, action: Selector, title: String, color: UIColor) -> UIButton {
         let btn = UIButton(frame: frame)
         btn.addTarget(target, action: action, for: .touchUpInside)

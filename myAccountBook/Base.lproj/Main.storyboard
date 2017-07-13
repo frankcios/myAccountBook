@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9Px-fQ-6RO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ByM-G6-lFX">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -12,20 +12,20 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--關於-->
+        <!--更多-->
         <scene sceneID="cPc-6F-XZo">
             <objects>
-                <viewController title="關於" id="Ndw-Ke-7oM" customClass="MoreVC" customModule="myAccountBook" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="更多" id="Ndw-Ke-7oM" customClass="MoreVC" customModule="myAccountBook" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Fh2-mn-7xD"/>
                         <viewControllerLayoutGuide type="bottom" id="x9a-6K-aEW"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7bT-IP-fgr">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="V4d-ck-PVA">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="ua6-vg-afR">
@@ -47,17 +47,16 @@
                             <constraint firstAttribute="trailing" secondItem="V4d-ck-PVA" secondAttribute="trailing" id="vN0-zE-hPi"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="更多" image="more" id="Ukj-lq-1yw"/>
+                    <tabBarItem key="tabBarItem" systemItem="more" id="Ukj-lq-1yw"/>
                     <connections>
                         <outlet property="tableView" destination="V4d-ck-PVA" id="WaW-W7-sr0"/>
-                        <segue destination="gto-0V-Fz6" kind="show" identifier="showChart" id="cWc-xY-wah"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="amE-3d-dTr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-263" y="1776"/>
+            <point key="canvasLocation" x="-391" y="1719"/>
         </scene>
-        <!--ChartVC-->
+        <!--圖表-->
         <scene sceneID="xkv-Pc-z62">
             <objects>
                 <viewController id="gto-0V-Fz6" customClass="ChartVC" customModule="myAccountBook" customModuleProvider="target" sceneMemberID="viewController">
@@ -66,15 +65,15 @@
                         <viewControllerLayoutGuide type="bottom" id="car-8R-hMt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4dH-gV-QJT">
-                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fw2-46-Yq8" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="533"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="528"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zs-rA-YNZ">
-                                <rect key="frame" x="0.0" y="553" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="568" width="375" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvD-kf-N5h">
                                         <rect key="frame" x="325" y="0.0" width="50" height="50"/>
@@ -90,16 +89,29 @@
                                             <action selector="prevYear:" destination="gto-0V-Fz6" eventType="touchUpInside" id="y16-AY-rgU"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017 年" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vJP-Pn-JU3">
+                                        <rect key="frame" x="0.0" y="0.0" width="70" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="70" id="Z4e-ts-XhB"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.40784313729999999" green="0.40784313729999999" blue="0.40784313729999999" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
                                     <constraint firstItem="YYn-we-dMZ" firstAttribute="height" secondItem="5zs-rA-YNZ" secondAttribute="height" id="2Nv-KN-AVt"/>
                                     <constraint firstItem="dvD-kf-N5h" firstAttribute="leading" secondItem="YYn-we-dMZ" secondAttribute="trailing" constant="8" id="4RR-om-1ur"/>
+                                    <constraint firstItem="vJP-Pn-JU3" firstAttribute="leading" secondItem="5zs-rA-YNZ" secondAttribute="leading" id="7oh-BW-dRo"/>
                                     <constraint firstItem="YYn-we-dMZ" firstAttribute="width" secondItem="5zs-rA-YNZ" secondAttribute="height" multiplier="1:1" id="9lw-xB-wve"/>
                                     <constraint firstAttribute="bottom" secondItem="YYn-we-dMZ" secondAttribute="bottom" id="B21-Ke-yEE"/>
                                     <constraint firstAttribute="bottom" secondItem="dvD-kf-N5h" secondAttribute="bottom" id="BGz-ic-OaZ"/>
+                                    <constraint firstItem="vJP-Pn-JU3" firstAttribute="height" secondItem="5zs-rA-YNZ" secondAttribute="height" id="NKI-0A-Tq8"/>
+                                    <constraint firstItem="vJP-Pn-JU3" firstAttribute="top" secondItem="5zs-rA-YNZ" secondAttribute="top" id="U2j-4n-ODP"/>
                                     <constraint firstItem="dvD-kf-N5h" firstAttribute="top" secondItem="5zs-rA-YNZ" secondAttribute="top" id="W5v-5M-baj"/>
                                     <constraint firstItem="YYn-we-dMZ" firstAttribute="top" secondItem="5zs-rA-YNZ" secondAttribute="top" id="Xnb-uy-Ehl"/>
+                                    <constraint firstAttribute="bottom" secondItem="vJP-Pn-JU3" secondAttribute="bottom" id="bgb-II-omV"/>
                                     <constraint firstItem="dvD-kf-N5h" firstAttribute="height" secondItem="5zs-rA-YNZ" secondAttribute="height" id="fAo-bg-8sU"/>
                                     <constraint firstItem="dvD-kf-N5h" firstAttribute="width" secondItem="5zs-rA-YNZ" secondAttribute="height" multiplier="1:1" id="pft-ck-hdr"/>
                                     <constraint firstAttribute="trailing" secondItem="dvD-kf-N5h" secondAttribute="trailing" id="zCf-8W-1w1"/>
@@ -119,14 +131,15 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <tabBarItem key="tabBarItem" systemItem="featured" id="TWh-9u-FFC"/>
+                    <tabBarItem key="tabBarItem" title="圖表" image="graph" id="TWh-9u-FFC"/>
                     <connections>
                         <outlet property="barChartView" destination="fw2-46-Yq8" id="Cly-mS-XqU"/>
+                        <outlet property="yearLabel" destination="vJP-Pn-JU3" id="Knt-qR-qVV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oqH-bu-TXd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="638" y="1775"/>
+            <point key="canvasLocation" x="525.60000000000002" y="1718.5907046476764"/>
         </scene>
         <!--記帳小幫手-->
         <scene sceneID="tne-QT-ifu">
@@ -141,7 +154,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="luC-Lb-nbC">
-                                <rect key="frame" x="0.0" y="110" width="375" height="493"/>
+                                <rect key="frame" x="0.0" y="110" width="375" height="444"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RecordCell" textLabel="D9Q-ic-Ipt" detailTextLabel="BWt-1E-grD" rowHeight="60" style="IBUITableViewCellStyleValue1" id="5XI-Uz-4bA">
@@ -274,14 +287,8 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="luC-Lb-nbC" secondAttribute="bottom" id="raT-Pj-XXE"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="8Tf-Qd-bfb"/>
+                    <tabBarItem key="tabBarItem" title="" id="75h-F0-sqA"/>
                     <navigationItem key="navigationItem" title="記帳小幫手" id="NoS-wB-rgo">
-                        <barButtonItem key="leftBarButtonItem" image="more" id="g2G-ap-aTS">
-                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <segue destination="Ndw-Ke-7oM" kind="show" id="7V4-T7-M9D"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="BOG-tp-sWj">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -299,7 +306,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-262" y="949"/>
+            <point key="canvasLocation" x="-2286" y="1719"/>
         </scene>
         <!--新增/更新-->
         <scene sceneID="CKA-kh-LB6">
@@ -400,12 +407,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r88-yM-hBQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="639" y="949"/>
+            <point key="canvasLocation" x="-1415" y="1719"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="jf9-fw-vPm">
+            <objects>
+                <tabBarController id="ByM-G6-lFX" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="f2o-Aw-hUy"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="NOk-Le-sEB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="9Px-fQ-6RO" kind="relationship" relationship="viewControllers" id="B3d-Od-iPe"/>
+                        <segue destination="gto-0V-Fz6" kind="relationship" relationship="viewControllers" id="Efx-KE-YG6"/>
+                        <segue destination="Ndw-Ke-7oM" kind="relationship" relationship="viewControllers" id="Lwe-Mh-3bK"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KbC-ji-XXo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-391" y="889"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="GH6-tO-Tao">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9Px-fQ-6RO" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" badgeValue="記帳" systemItem="history" id="LxH-68-N5N"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="pIQ-pz-Id0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -418,16 +445,16 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="H5V-kh-8N6"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="iWe-5E-PHa"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W6u-9V-5wP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1073" y="949"/>
+            <point key="canvasLocation" x="-3169" y="1719"/>
         </scene>
     </scenes>
     <resources>
-        <image name="more" width="32" height="32"/>
+        <image name="graph" width="32" height="32"/>
         <image name="next" width="32" height="32"/>
         <image name="prev" width="32" height="32"/>
     </resources>

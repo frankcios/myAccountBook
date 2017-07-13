@@ -127,7 +127,7 @@ class PostVC: BaseVC {
     // 儲存紀錄
     @IBAction func saveBtnPressed(_ sender: UIButton) {
     
-        if !(titleTextField.text?.isEmpty)! && !(amountTextField.text?.isEmpty)! {
+        if titleTextField.text != "" && amountTextField.text != "" {
             
             if myUserDefaults.integer(forKey: "postID") == 0 {
                 record = Record(context: context)
@@ -145,10 +145,6 @@ class PostVC: BaseVC {
                 record.yearMonth = (record.createTime as NSString).substring(to: 7)
                 record.createDate = (record.createTime as NSString).substring(to: 10)
                 
-//                print("\(record.id) \(record.title) \(record.amount) \(record.yearMonth) \(record.createDate) \(record.createTime)")
-                
-                ad.saveContext()
-                
                 // 儲存id值
                 myUserDefaults.set(seq ,forKey: "seq")
                 
@@ -159,6 +155,7 @@ class PostVC: BaseVC {
                 myUserDefaults.synchronize()
                 
             } else {
+                
                 let recordID = Int32(self.myUserDefaults.integer(forKey: "postID"))
                 let fetchRequest: NSFetchRequest = Record.fetchRequest()
                 let results = try! context.fetch(fetchRequest)
@@ -170,10 +167,10 @@ class PostVC: BaseVC {
                     record.yearMonth = (record.createTime as NSString).substring(to: 7)
                     record.createDate = (record.createTime as NSString).substring(to: 10)
                 }
-                
-                ad.saveContext()
             }
-            
+        
+            ad.saveContext()
+                        
             if soundOpen {
                 addSound.play()
             }
