@@ -104,4 +104,27 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource  {
         
         performSegue(withIdentifier: "PostVC", sender: nil)
     }
+    
+    // MARK: - UIScrollViewDelegate
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        newContentOffsetY = scrollView.contentOffset.y
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        
+        // 向上滑動時隱藏
+        if scrollView.contentOffset.y > newContentOffsetY {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.tabBarController?.tabBar.frame = CGRect(x: 0, y: self.fullSize.height, width: self.fullSize.width, height: 49)
+            })
+        } else {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.tabBarController?.tabBar.frame = CGRect(x: 0, y: self.fullSize.height - 49, width: self.fullSize.width, height: 49)
+            })
+        }
+    }
+    
+    
 }

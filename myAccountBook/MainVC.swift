@@ -16,9 +16,7 @@ class MainVC: BaseVC {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var currentMonthLbl: UILabel!
     @IBOutlet weak var totalLbl: UILabel!
-    
-    var deleteSound: AVAudioPlayer!
-    
+        
     // 一個月有哪幾天有紀錄
     var days: [String]! = []
     
@@ -27,6 +25,12 @@ class MainVC: BaseVC {
     
     // 每天的消費金額加總
     var dayCost: [String:String]! = [:]
+    
+    var newContentOffsetY: CGFloat = 0.0
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
     
     @IBAction func previousBtnPressed(_ sender: UIButton!) {
         var dateComponets = DateComponents()
@@ -49,11 +53,17 @@ class MainVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         setupViews()
         createUserNotifications()
         
         if myUserDefaults.double(forKey: "limitCost") != 0.0 { return }
         myUserDefaults.set(5000.0, forKey: "limitCost")
+        
+        // 初次設定分類
+        myUserDefaults.set(customCategories, forKey: "customCategories")
         
 //        print(NSPersistentContainer.defaultDirectoryURL())
     }
@@ -102,9 +112,6 @@ class MainVC: BaseVC {
         // 設定tableView分隔線
         tableView.separatorColor = UIColor(red: 240.0/255.0, green: 240.0/255.0, blue: 240.0/255.0, alpha: 0.8)
         tableView.separatorInset = UIEdgeInsets.zero
-        
-        tableView.delegate = self
-        tableView.dataSource = self
         
         // 日期設定
         currentMonthLbl.text = dateFormatter.stringWith(format: "yyyy 年 MM 月", date: currentDate)

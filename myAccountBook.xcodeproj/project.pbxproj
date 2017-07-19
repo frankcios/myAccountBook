@@ -10,6 +10,7 @@
 		0119543B1F0CEF4700E96163 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119543A1F0CEF4700E96163 /* DateFormatter+Extension.swift */; };
 		0119543D1F0CF54100E96163 /* PostVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119543C1F0CF54100E96163 /* PostVC+Extension.swift */; };
 		014887F51F0F85F10002E331 /* MyAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014887F41F0F85F10002E331 /* MyAxisValueFormatter.swift */; };
+		016B86C51F1DEF4700686889 /* CustomCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B86C41F1DEF4700686889 /* CustomCategoryVC.swift */; };
 		017158431DD8398B003D3652 /* MoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017158421DD8398B003D3652 /* MoreVC.swift */; };
 		017158461DD85226003D3652 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 017158451DD85226003D3652 /* MessageUI.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		0171586F1DD87330003D3652 /* bottle_pop_3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0171586E1DD87330003D3652 /* bottle_pop_3.wav */; };
@@ -27,7 +28,7 @@
 		01E9833D1F0E056B0021FEED /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9833C1F0E056A0021FEED /* String+Extension.swift */; };
 		01E9833F1F0E4B710021FEED /* MyIndexFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9833E1F0E4B710021FEED /* MyIndexFormatter.swift */; };
 		01E983411F0E51740021FEED /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E983401F0E51740021FEED /* BaseVC.swift */; };
-		01F39F5A1DDA3ECA00B93C21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01F39F591DDA3ECA00B93C21 /* Assets.xcassets */; };
+		01F7D8BF1F1F15550064201B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01F7D8BE1F1F15550064201B /* Assets.xcassets */; };
 		951B792B7DA8CD4C428DF44B /* Pods_myAccountBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC9E64C30F3DF944D8C622E /* Pods_myAccountBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		0119543A1F0CEF4700E96163 /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
 		0119543C1F0CF54100E96163 /* PostVC+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostVC+Extension.swift"; sourceTree = "<group>"; };
 		014887F41F0F85F10002E331 /* MyAxisValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAxisValueFormatter.swift; sourceTree = "<group>"; };
+		016B86C41F1DEF4700686889 /* CustomCategoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCategoryVC.swift; sourceTree = "<group>"; };
 		017158421DD8398B003D3652 /* MoreVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreVC.swift; sourceTree = "<group>"; };
 		017158451DD85226003D3652 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		0171586E1DD87330003D3652 /* bottle_pop_3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = bottle_pop_3.wav; path = sounds/bottle_pop_3.wav; sourceTree = "<group>"; };
@@ -56,7 +58,7 @@
 		01E9833C1F0E056A0021FEED /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		01E9833E1F0E4B710021FEED /* MyIndexFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyIndexFormatter.swift; sourceTree = "<group>"; };
 		01E983401F0E51740021FEED /* BaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
-		01F39F591DDA3ECA00B93C21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		01F7D8BE1F1F15550064201B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40DF895F42E6C038CA10C933 /* Pods-myAccountBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myAccountBook.release.xcconfig"; path = "Pods/Target Support Files/Pods-myAccountBook/Pods-myAccountBook.release.xcconfig"; sourceTree = "<group>"; };
 		6DC9E64C30F3DF944D8C622E /* Pods_myAccountBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_myAccountBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB6BD8F49A28009EBA02B1A3 /* Pods-myAccountBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myAccountBook.debug.xcconfig"; path = "Pods/Target Support Files/Pods-myAccountBook/Pods-myAccountBook.debug.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				0119543C1F0CF54100E96163 /* PostVC+Extension.swift */,
 				017158421DD8398B003D3652 /* MoreVC.swift */,
 				01E9833A1F0D34D60021FEED /* ChartVC.swift */,
+				016B86C41F1DEF4700686889 /* CustomCategoryVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -161,7 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				01A974D61DCB39BD00B522CD /* AppDelegate.swift */,
-				01F39F591DDA3ECA00B93C21 /* Assets.xcassets */,
+				01F7D8BE1F1F15550064201B /* Assets.xcassets */,
 				01A974E51DCB39BD00B522CD /* Info.plist */,
 				01E9833E1F0E4B710021FEED /* MyIndexFormatter.swift */,
 				014887F41F0F85F10002E331 /* MyAxisValueFormatter.swift */,
@@ -254,7 +257,7 @@
 				017158711DD87334003D3652 /* cutting-paper-2.mp3 in Resources */,
 				01A974E41DCB39BD00B522CD /* LaunchScreen.storyboard in Resources */,
 				01A974DC1DCB39BD00B522CD /* Main.storyboard in Resources */,
-				01F39F5A1DDA3ECA00B93C21 /* Assets.xcassets in Resources */,
+				01F7D8BF1F1F15550064201B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +319,7 @@
 				01E9833F1F0E4B710021FEED /* MyIndexFormatter.swift in Sources */,
 				01B851A31EFA1E330067540E /* MainVC+Extension.swift in Sources */,
 				01E9833B1F0D34D60021FEED /* ChartVC.swift in Sources */,
+				016B86C51F1DEF4700686889 /* CustomCategoryVC.swift in Sources */,
 				01A974ED1DCB3AD800B522CD /* Record+CoreDataClass.swift in Sources */,
 				0119543B1F0CEF4700E96163 /* DateFormatter+Extension.swift in Sources */,
 				01E983411F0E51740021FEED /* BaseVC.swift in Sources */,

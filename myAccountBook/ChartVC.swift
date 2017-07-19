@@ -19,10 +19,6 @@ class ChartVC: BaseVC {
     var costs: [Double]!
 
     var perMonthCost: [String:[[String:String]]]! = [:]
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
 
     @IBAction func prevYear(_ sender: UIButton!) {
         var dateComponets = DateComponents()
@@ -170,7 +166,6 @@ class ChartVC: BaseVC {
             
             // 限制線
             let limitCost = myUserDefaults.double(forKey: "limitCost")
-            print(limitCost)
             let chartLimitLine = ChartLimitLine(limit: limitCost)
             chartLimitLine.lineWidth = 2
             chartLimitLine.lineDashLengths = [5.0, 5.0]

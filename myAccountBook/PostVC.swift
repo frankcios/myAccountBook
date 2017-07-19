@@ -27,7 +27,6 @@ class PostVC: BaseVC {
     }
     
     var myDatePicker: UIDatePicker = {
-        // UIPickerView
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .dateAndTime
         datePicker.locale = Locale(identifier: "zh_TW")
@@ -35,9 +34,14 @@ class PostVC: BaseVC {
         return datePicker
     }()
     
-    // MARK: - sound variable
-    var addSound: AVAudioPlayer!
-    var deleteSound: AVAudioPlayer!
+    var myPickerView: UIPickerView = {
+        let pickerView = UIPickerView()
+        return pickerView
+    }()
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
     
     // 儲存音效開啟狀態
     var soundOpen: Bool = false
@@ -61,11 +65,14 @@ class PostVC: BaseVC {
         amountTextField.attributedPlaceholder = NSAttributedString(string: "金額", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         
         amountTextField.delegate = self
+        myPickerView.dataSource = self
+        myPickerView.delegate = self
         
         // 取得現在時間
         createTimeTextField.text = dateFormatter.stringWith(format: "yyyy-MM-dd HH:mm", date: currentDate)
         // 把DatePicker嵌入在TextField中
         createTimeTextField.inputView = myDatePicker
+        titleTextField.inputView = myPickerView
         
         // 按一下空白處隱藏編輯狀態
         let tap = UITapGestureRecognizer(target: self, action: #selector(PostVC.hideKeyboard(_:)))
@@ -101,6 +108,11 @@ class PostVC: BaseVC {
             self.navigationItem.title = "新增"
         }
         setupAudio()
+        
+        // 讀取自定義分類
+        if let okCategories = myUserDefaults.object(forKey: "customCategories") as? [String] {
+            customCategories = okCategories
+        }
     }
     
     func setupAudio() {

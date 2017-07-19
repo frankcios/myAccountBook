@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         // 設定導覽列背景顏色
@@ -36,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
             // doNothing
         })
+        
+        tabBarVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabBarVC") as? UITabBarController
         
         return true
         
@@ -117,3 +118,5 @@ let context = ad.persistentContainer.viewContext
 
 let build = Bundle.main.infoDictionary!["CFBundleVersion"]
 let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"]
+
+var tabBarVC: UITabBarController?

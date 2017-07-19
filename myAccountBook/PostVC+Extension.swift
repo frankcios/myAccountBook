@@ -8,8 +8,9 @@
 
 import UIKit
 
-extension PostVC: UITextFieldDelegate {
+extension PostVC: UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    // MARK: - UITextFieldDelegate
     // 金額只能有一個小數點
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField.tag == 101 {
@@ -29,4 +30,27 @@ extension PostVC: UITextFieldDelegate {
         
         return true
     }
+    
+    // MARK: - UIPickerViewDataSource
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return customCategories.count
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return customCategories[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        titleTextField.text = customCategories[row]
+    }
+    
+    
+    
 }
