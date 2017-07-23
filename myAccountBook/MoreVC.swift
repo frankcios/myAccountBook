@@ -17,8 +17,6 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
     
     @IBOutlet weak var tableView: UITableView!
     
-    
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,7 +60,7 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         
         composeVC.setSubject("聯絡開發者")
         composeVC.setToRecipients(["pk15678@gmail.com"])
-        composeVC.setMessageBody("app Version: \(version!) (\(build!))", isHTML: false)
+        composeVC.setMessageBody("\n\n\n System Version: \(systemVersion)\n App Version: \(version!)", isHTML: false)
         
         // present
         present(composeVC, animated: true, completion: nil)
@@ -97,6 +95,7 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
     }
     
     // Mark: - MFMailComposeViewControllerDelegate
+    
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         
         switch (result)
@@ -115,6 +114,7 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
     }
 
     // MARK: - UITableViewDataSource
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         
         return 3
@@ -186,6 +186,7 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
     }
     
     // MARK: - UITableViewDelegate
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // 取消 cell 的選取狀態

@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-extension MainVC: UITableViewDelegate, UITableViewDataSource  {
+extension MainVC: UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - UITableViewDataSource
     // 定義section數量

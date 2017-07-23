@@ -102,7 +102,7 @@ class CustomCategoryVC: BaseVC, UITableViewDataSource, UITableViewDelegate, UITe
     }
     
     
-    // MARK: - Table view data source
+    // MARK: - UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -132,8 +132,6 @@ class CustomCategoryVC: BaseVC, UITableViewDataSource, UITableViewDelegate, UITe
             cell.accessoryType = .disclosureIndicator
         }
         
-//        print("cellForRowAt---", indexPath.row, cell)
-        
         return cell
     }
     
@@ -157,7 +155,7 @@ class CustomCategoryVC: BaseVC, UITableViewDataSource, UITableViewDelegate, UITe
     }
 
     
-    // MARK: - Table view delegate
+    // MARK: - UITableViewDelegate
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
@@ -211,6 +209,7 @@ class CustomCategoryVC: BaseVC, UITableViewDataSource, UITableViewDelegate, UITe
         return true
     }
     
+    // MARK: - UITapGestureRecognizer
     // 按空白處會隱藏編輯狀態
     func hideKeyboard(_ tapG: UITapGestureRecognizer?) {
         self.view.endEditing(true)

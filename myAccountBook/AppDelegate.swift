@@ -118,5 +118,9 @@ let context = ad.persistentContainer.viewContext
 
 let build = Bundle.main.infoDictionary!["CFBundleVersion"]
 let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"]
+let majorVersion = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
+let minorVersion = ProcessInfo.processInfo.operatingSystemVersion.minorVersion
+let patchVersion = ProcessInfo.processInfo.operatingSystemVersion.patchVersion
+let systemVersion = "\(majorVersion).\(minorVersion).\(patchVersion)"
 
 var tabBarVC: UITabBarController?

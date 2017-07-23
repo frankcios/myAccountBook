@@ -43,9 +43,6 @@ class PostVC: BaseVC {
         return false
     }
     
-    // 儲存音效開啟狀態
-    var soundOpen: Bool = false
-    
     // MARK: - record variable
     var record: Record!
     var recordID: Int32?
@@ -82,8 +79,10 @@ class PostVC: BaseVC {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         if let open = myUserDefaults.object(forKey: "soundOpen") as? Int {
-            soundOpen = open == 1 ? true : false
+            isSoundOpen = open == 1 ? true : false
         }
         
         let recordID = Int32(myUserDefaults.integer(forKey: "postID"))
@@ -107,32 +106,10 @@ class PostVC: BaseVC {
             self.navigationItem.rightBarButtonItem = nil
             self.navigationItem.title = "新增"
         }
-        setupAudio()
         
         // 讀取自定義分類
         if let okCategories = myUserDefaults.object(forKey: "customCategories") as? [String] {
             customCategories = okCategories
-        }
-    }
-    
-    func setupAudio() {
-        // 音效
-        if soundOpen {
-            let addSoundPath = Bundle.main.path(forResource: "bottle_pop_3", ofType: "wav")
-            let deleteSoundPath = Bundle.main.path(forResource: "cutting-paper-2", ofType: "mp3")
-            
-            do {
-                addSound = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: addSoundPath!))
-                addSound.numberOfLoops = 0
-                
-                deleteSound = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: deleteSoundPath!))
-                deleteSound.numberOfLoops = 0
-            } catch {
-                print("error")
-            }
-        } else {
-            addSound = nil
-            deleteSound = nil
         }
     }
 
@@ -183,7 +160,7 @@ class PostVC: BaseVC {
         
             ad.saveContext()
                         
-            if soundOpen {
+            if isSoundOpen {
                 addSound.play()
             }
             _ = self.navigationController?.popViewController(animated: true)
@@ -216,7 +193,7 @@ class PostVC: BaseVC {
             self.dismiss(animated: true, completion: nil)
             _ = self.navigationController?.popViewController(animated: true)
             
-            if self.soundOpen {
+            if self.isSoundOpen {
                 self.deleteSound.play()
             }
         })

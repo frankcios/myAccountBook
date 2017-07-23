@@ -85,24 +85,6 @@ class MainVC: BaseVC {
         myUserDefaults.synchronize()
         
         updateRecordsList()
-        setupAudio()
-    }
-    
-    func setupAudio() {
-        // 音效
-        if myUserDefaults.object(forKey: "soundOpen") as? Int == 1 {
-            
-            let deleteSoundPath = Bundle.main.path(forResource: "cutting-paper-2", ofType: "mp3")
-            
-            do {
-                deleteSound = try AVAudioPlayer(contentsOf: URL(fileURLWithPath:     deleteSoundPath!))
-                deleteSound.numberOfLoops = 0
-            } catch {
-                print("error")
-            }
-        } else {
-            deleteSound = nil
-        }
     }
     
     func setupViews() {
@@ -197,7 +179,6 @@ class MainVC: BaseVC {
                 
                 // 儲存目前讀到的日期
                 myUserDefaults.set(createDate, forKey: "CreateDate")
-
             }
             
             totalLbl.text = String(format: "%g",total)

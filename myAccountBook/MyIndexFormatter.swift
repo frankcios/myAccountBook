@@ -9,6 +9,7 @@
 import Charts
 
 class MyIndexFormatter: IndexAxisValueFormatter {
+    
     override func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         return "\(value)"
     }

@@ -96,6 +96,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		017205CC1F22F5CC0040D55E /* Formatter */ = {
+			isa = PBXGroup;
+			children = (
+				01E9833E1F0E4B710021FEED /* MyIndexFormatter.swift */,
+				014887F41F0F85F10002E331 /* MyAxisValueFormatter.swift */,
+			);
+			name = Formatter;
+			sourceTree = "<group>";
+		};
 		01A974CA1DCB39BD00B522CD = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +130,7 @@
 				01A974EF1DCB3B9900B522CD /* CoreData */,
 				01A974F11DCB3BC500B522CD /* Controller */,
 				014887F81F112C060002E331 /* Extension */,
+				017205CC1F22F5CC0040D55E /* Formatter */,
 				01F39F5B1DDDF48D00B93C21 /* Supporting Files */,
 				01F39F5C1DDE044F00B93C21 /* Sounds */,
 			);
@@ -166,8 +176,6 @@
 				01A974D61DCB39BD00B522CD /* AppDelegate.swift */,
 				01F7D8BE1F1F15550064201B /* Assets.xcassets */,
 				01A974E51DCB39BD00B522CD /* Info.plist */,
-				01E9833E1F0E4B710021FEED /* MyIndexFormatter.swift */,
-				014887F41F0F85F10002E331 /* MyAxisValueFormatter.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

@@ -30,7 +30,7 @@ extension PostVC: UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDeleg
         
         return true
     }
-    
+        
     // MARK: - UIPickerViewDataSource
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -50,7 +50,5 @@ extension PostVC: UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDeleg
         
         titleTextField.text = customCategories[row]
     }
-    
-    
     
 }
