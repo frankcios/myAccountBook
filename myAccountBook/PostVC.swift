@@ -16,6 +16,10 @@ class PostVC: BaseVC {
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var createTimeTextField: UITextField!
     
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
     @IBOutlet weak var saveBtn: UIButton! {
         didSet {
             // 儲存按鈕
@@ -34,14 +38,15 @@ class PostVC: BaseVC {
         return datePicker
     }()
     
-    var myPickerView: UIPickerView = {
+    // MARK: - tapRecongnizer for pickerView
+    var tapRecongnizer: UITapGestureRecognizer!
+    
+    lazy var myPickerView: UIPickerView = {
         let pickerView = UIPickerView()
+        self.tapRecongnizer = UITapGestureRecognizer(target: self, action: #selector(PostVC.tappedToSelectRow(_:)))
+        pickerView.addGestureRecognizer(self.tapRecongnizer)
         return pickerView
     }()
-    
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
     
     // MARK: - record variable
     var record: Record!
@@ -64,6 +69,8 @@ class PostVC: BaseVC {
         amountTextField.delegate = self
         myPickerView.dataSource = self
         myPickerView.delegate = self
+        tapRecongnizer.delegate = self
+        tapRecongnizer.cancelsTouchesInView = false
         
         // 取得現在時間
         createTimeTextField.text = dateFormatter.stringWith(format: "yyyy-MM-dd HH:mm", date: currentDate)
@@ -214,4 +221,20 @@ class PostVC: BaseVC {
     func selectDate(_ sender: UIDatePicker) {
         createTimeTextField.text = dateFormatter.string(from: myDatePicker.date)
     }
+    
+    // pickerView tap selected row
+    func tappedToSelectRow(_ tapRecognizer: UITapGestureRecognizer) {
+        if tapRecongnizer.state == .ended {
+            let rowHeight: CGFloat = myPickerView.rowSize(forComponent: 0).height
+            let selectedRowFrame: CGRect = myPickerView.bounds.insetBy(dx: 0.0, dy: (myPickerView.frame.height - rowHeight) / 2.0 )
+            let userTappedOnSelectedRow = (selectedRowFrame.contains(tapRecognizer.location(in: myPickerView)))
+            if (userTappedOnSelectedRow)
+            {
+                let selectedRow = myPickerView.selectedRow(inComponent: 0)
+                titleTextField.text = customCategories[selectedRow]
+                print(selectedRow)
+            }
+        }
+    }
+
 }

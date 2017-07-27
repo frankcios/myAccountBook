@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension PostVC: UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+extension PostVC: UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate {
     
     // MARK: - UITextFieldDelegate
     // 金額只能有一個小數點
@@ -51,4 +51,9 @@ extension PostVC: UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDeleg
         titleTextField.text = customCategories[row]
     }
     
+    // MARK: - UIGestureRecongnizerDelegate
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }

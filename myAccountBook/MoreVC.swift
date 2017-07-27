@@ -12,8 +12,9 @@ import MessageUI
 class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate  {
     
     var mySwitch: UISwitch!
-    
     var soundOpen: Int? = 0
+    
+    let cellId = "Cell"
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -134,8 +135,6 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cellId = "Cell"
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         

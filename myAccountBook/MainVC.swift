@@ -16,7 +16,9 @@ class MainVC: BaseVC {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var currentMonthLbl: UILabel!
     @IBOutlet weak var totalLbl: UILabel!
-        
+    
+    let cellId = "RecordCell"
+
     // 一個月有哪幾天有紀錄
     var days: [String]! = []
     

@@ -15,7 +15,6 @@ class CustomCategoryVC: BaseVC, UITableViewDataSource, UITableViewDelegate, UITe
     let cellId = "CellId"
     let inputCellId = "inputCellId"
 
-
     lazy var insertTextField: UITextField = {
         let frame = CGRect(x: 15, y: 0, width: self.fullSize.width - 20, height: 40)
         let textField = UITextField(frame: frame)

@@ -32,8 +32,6 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     // 定義每個cell要顯示的內容
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cellId = "RecordCell" 
-        
         // 取得 tableView 目前使用的 cell
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         
