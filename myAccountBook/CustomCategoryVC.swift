@@ -188,6 +188,7 @@ class CustomCategoryVC: BaseVC, UITableViewDataSource, UITableViewDelegate, UITe
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
       
+        // 要有輸入文字才能按Return
         if textField.text == "" {
             textField.enablesReturnKeyAutomatically = true
         }
@@ -195,14 +196,25 @@ class CustomCategoryVC: BaseVC, UITableViewDataSource, UITableViewDelegate, UITe
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
+        var isCategoryExist = false
+        
         if let text = textField.text {
-            customCategories.insert(text, at: 0)
-            
-            setCustomCategories()
+            for category in customCategories {
+                if text == category {
+                    isCategoryExist = true
+   
+                    let alert = UIAlertController(title: "此分類已存在", message: nil, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "確定", style: .default, handler: nil))
+                    present(alert, animated: true, completion: nil)
+                }
+            }
+            if !isCategoryExist {
+                customCategories.insert(text, at: 0)
+                setCustomCategories()
+            }
         }
-        
+     
         textField.text = ""
-        
         tableView.reloadData()
         
         return true

@@ -33,7 +33,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // 取得 tableView 目前使用的 cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! RecordCell
         
         let date = days[indexPath.section]
         guard let records = myRecords[date] else {
@@ -41,8 +41,9 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         }
         
         // 顯示的格式與內容
-        cell.textLabel?.text = records[indexPath.row]["title"]
-        cell.detailTextLabel?.text = String(format: "%g", Double(records[indexPath.row]["amount"]!)!)
+        cell.titleLabel.text = records[indexPath.row]["title"]
+        cell.amountLabel.text = String(format: "%g", Double(records[indexPath.row]["amount"]!)!)
+        cell.descLabel.text = records[indexPath.row]["desc"]
         return cell
     }
     

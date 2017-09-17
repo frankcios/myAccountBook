@@ -10,6 +10,27 @@ import UIKit
 
 extension PostVC: UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate {
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        let recordID = Int32(myUserDefaults.integer(forKey: "postID"))
+
+        if recordID > 0 {
+            if textField.tag == 100 {
+                titleTextField.text = category
+                for (index, value) in customCategories.enumerated() {
+                    if value == category {
+                        myPickerView.selectRow(index, inComponent: 0, animated: true)
+                    }
+                }
+
+            } else if textField.tag == 101 {
+                amountTextField.text = amount
+            } else if textField.tag == 102 {
+                descriptionTextField.text = desc
+            }
+        }
+    }
+    
     // MARK: - UITextFieldDelegate
     // 金額只能有一個小數點
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

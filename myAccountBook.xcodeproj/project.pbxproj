@@ -10,6 +10,7 @@
 		0119543B1F0CEF4700E96163 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119543A1F0CEF4700E96163 /* DateFormatter+Extension.swift */; };
 		0119543D1F0CF54100E96163 /* PostVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119543C1F0CF54100E96163 /* PostVC+Extension.swift */; };
 		014887F51F0F85F10002E331 /* MyAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014887F41F0F85F10002E331 /* MyAxisValueFormatter.swift */; };
+		015A5FE81F6E29F9003D91B1 /* RecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015A5FE71F6E29F9003D91B1 /* RecordCell.swift */; };
 		016B86C51F1DEF4700686889 /* CustomCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B86C41F1DEF4700686889 /* CustomCategoryVC.swift */; };
 		017158431DD8398B003D3652 /* MoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017158421DD8398B003D3652 /* MoreVC.swift */; };
 		017158461DD85226003D3652 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 017158451DD85226003D3652 /* MessageUI.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -36,6 +37,7 @@
 		0119543A1F0CEF4700E96163 /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
 		0119543C1F0CF54100E96163 /* PostVC+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostVC+Extension.swift"; sourceTree = "<group>"; };
 		014887F41F0F85F10002E331 /* MyAxisValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAxisValueFormatter.swift; sourceTree = "<group>"; };
+		015A5FE71F6E29F9003D91B1 /* RecordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordCell.swift; sourceTree = "<group>"; };
 		016B86C41F1DEF4700686889 /* CustomCategoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCategoryVC.swift; sourceTree = "<group>"; };
 		017158421DD8398B003D3652 /* MoreVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreVC.swift; sourceTree = "<group>"; };
 		017158451DD85226003D3652 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -166,6 +168,7 @@
 			children = (
 				01A974DA1DCB39BD00B522CD /* Main.storyboard */,
 				01A974E21DCB39BD00B522CD /* LaunchScreen.storyboard */,
+				015A5FE71F6E29F9003D91B1 /* RecordCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				01A974D91DCB39BD00B522CD /* MainVC.swift in Sources */,
 				017158431DD8398B003D3652 /* MoreVC.swift in Sources */,
 				0119543D1F0CF54100E96163 /* PostVC+Extension.swift in Sources */,
+				015A5FE81F6E29F9003D91B1 /* RecordCell.swift in Sources */,
 				014887F51F0F85F10002E331 /* MyAxisValueFormatter.swift in Sources */,
 				01A974DF1DCB39BD00B522CD /* myAccountBook.xcdatamodeld in Sources */,
 				01A974D71DCB39BD00B522CD /* AppDelegate.swift in Sources */,

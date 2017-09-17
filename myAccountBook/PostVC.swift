@@ -15,6 +15,7 @@ class PostVC: BaseVC {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var createTimeTextField: UITextField!
+    @IBOutlet weak var descriptionTextField: UITextField!
     
     override var prefersStatusBarHidden: Bool {
         return false
@@ -52,6 +53,11 @@ class PostVC: BaseVC {
     var record: Record!
     var recordID: Int32?
     
+    // the property for store textfield text value
+    var category: String?
+    var amount: String?
+    var desc: String?
+    
     // MARK: 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,10 +71,14 @@ class PostVC: BaseVC {
         
         // 金額輸入框
         amountTextField.attributedPlaceholder = NSAttributedString(string: "金額", attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
-        
+
+        titleTextField.delegate = self
         amountTextField.delegate = self
-        myPickerView.dataSource = self
+        descriptionTextField.delegate = self
+        
         myPickerView.delegate = self
+        myPickerView.dataSource = self
+
         tapRecongnizer.delegate = self
         tapRecongnizer.cancelsTouchesInView = false
         
@@ -105,6 +115,7 @@ class PostVC: BaseVC {
                 // 格式化輸出字串 以一般格式顯示
                 amountTextField.text = String(format: "%g", record.amount)
                 createTimeTextField.text = record.createTime
+                descriptionTextField.text = record.desc
                 // 取得該筆記錄後將時間設定給datePicker顯示
                 myDatePicker.date = dateFormatter.date(from: record.createTime)!
             }
@@ -118,8 +129,17 @@ class PostVC: BaseVC {
         if let okCategories = myUserDefaults.object(forKey: "customCategories") as? [String] {
             customCategories = okCategories
         }
+        
+        // 記住textField的值，以防再次編輯被清空
+        copyTextFieldText()
     }
 
+    func copyTextFieldText() {
+        category = titleTextField.text
+        amount = amountTextField.text
+        desc = descriptionTextField.text 
+    }
+    
     // 儲存紀錄
     @IBAction func saveBtnPressed(_ sender: UIButton) {
     
@@ -140,6 +160,7 @@ class PostVC: BaseVC {
                 record.createTime = createTimeTextField.text!
                 record.yearMonth = (record.createTime as NSString).substring(to: 7)
                 record.createDate = (record.createTime as NSString).substring(to: 10)
+                record.desc = descriptionTextField.text
                 
                 // 儲存id值
                 myUserDefaults.set(seq ,forKey: "seq")
@@ -151,7 +172,7 @@ class PostVC: BaseVC {
                 myUserDefaults.synchronize()
                 
             } else {
-                
+                // 記錄存在就覆蓋掉
                 let recordID = Int32(self.myUserDefaults.integer(forKey: "postID"))
                 let fetchRequest: NSFetchRequest = Record.fetchRequest()
                 let results = try! context.fetch(fetchRequest)
@@ -162,6 +183,7 @@ class PostVC: BaseVC {
                     record.createTime = createTimeTextField.text!
                     record.yearMonth = (record.createTime as NSString).substring(to: 7)
                     record.createDate = (record.createTime as NSString).substring(to: 10)
+                    record.desc = descriptionTextField.text
                 }
             }
         
@@ -173,12 +195,11 @@ class PostVC: BaseVC {
             _ = self.navigationController?.popViewController(animated: true)
             
         } else {
-            let alert = UIAlertController(title: "未輸入分類或金額", message: "請輸入分類與金額", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "確定", style: .default, handler: { (UIAlertAction) in
-                self.dismiss(animated: true, completion: nil)
-            }))
+            let alert = UIAlertController(title: "未輸入分類與金額", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "確定", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
+        
     }
 
     // 刪除紀錄

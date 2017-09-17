@@ -22,4 +22,6 @@ final class Record: NSManagedObject {
     @NSManaged public var yearMonth: String
     @NSManaged public var createDate: String
     @NSManaged public var createTime: String
+    @NSManaged public var desc: String?
+
 }

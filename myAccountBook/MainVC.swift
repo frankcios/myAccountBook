@@ -148,6 +148,7 @@ class MainVC: BaseVC {
                 let title = result.value(forKey: "title") as! String
                 let amount = String(format: "%g", (result.value(forKey: "amount") as! Double))
                 let createDate = result.value(forKey: "createDate") as! String
+                let desc = result.value(forKey: "desc") as? String ?? ""
                 
                 if createDate != "" {
                     if !days.contains(createDate) {
@@ -158,7 +159,8 @@ class MainVC: BaseVC {
                     myRecords[createDate]?.append([
                         "id":"\(id)",
                         "title":"\(title)",
-                        "amount":"\(amount)"
+                        "amount":"\(amount)",
+                        "desc":"\(desc)"
                         ])
                    }
                 
