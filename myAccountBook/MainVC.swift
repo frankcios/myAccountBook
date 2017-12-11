@@ -11,6 +11,9 @@ import CoreData
 import AVFoundation
 import UserNotifications
 
+// 限制金額線
+let limitCost = 5000.0
+
 class MainVC: BaseVC {
 
     @IBOutlet weak var tableView: UITableView!
@@ -29,7 +32,7 @@ class MainVC: BaseVC {
     var dayCost: [String:String]! = [:]
     
     var newContentOffsetY: CGFloat = 0.0
-    
+        
     override var prefersStatusBarHidden: Bool {
         return false
     }
@@ -62,12 +65,12 @@ class MainVC: BaseVC {
         createUserNotifications()
         
         if myUserDefaults.double(forKey: "limitCost") != 0.0 { return }
-        myUserDefaults.set(5000.0, forKey: "limitCost")
+        myUserDefaults.set(limitCost, forKey: "limitCost")
         
         // 初次設定分類
         myUserDefaults.set(customCategories, forKey: "customCategories")
         
-//        print(NSPersistentContainer.defaultDirectoryURL())
+        print(NSPersistentContainer.defaultDirectoryURL())
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -200,6 +203,10 @@ class MainVC: BaseVC {
     
         currentMonthLbl.text = dateFormatter.stringWith(format: "yyyy 年 MM 月", date: currentDate)
         updateRecordsList()
+    }
+    
+    func handleOpenURL() {
+        
     }
 }
 

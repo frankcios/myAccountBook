@@ -36,17 +36,38 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         mySwitch.addTarget(self, action: #selector(MoreVC.onSwitchChanged), for: .touchUpInside)
     }
     
-    // MARK : Button Action
+    func popToCustomCategoryVC() {
+        
+        let customCategoryVC = self.storyboard?.instantiateViewController(withIdentifier: "custom")
+        
+        present(customCategoryVC!, animated: true, completion: nil)
+    }
+    
+    func setLimitCost() {
+        
+        let alert = UIAlertController(title: "每月限制金額", message: "請輸入金額 (顯示在圖表上的紅色虛線)", preferredStyle: .alert)
+        
+        // 添加textfield
+        alert.addTextField(configurationHandler: nil)
+        alert.textFields?[0].keyboardType = .numberPad
+        alert.textFields?[0].text = myUserDefaults.string(forKey: "limitCost")
+        
+        let okAction = UIAlertAction(title: "確定", style: .default) { (action) in
+            self.myUserDefaults.set(alert.textFields?[0].text, forKey: "limitCost")
+            self.myUserDefaults.synchronize()
+        }
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
+        
+        alert.addAction(cancelAction)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
     func onSwitchChanged(_ sender: UISwitch) {
         
         myUserDefaults.set( (sender.isOn ? 1 : 0 ), forKey: "soundOpen")
         myUserDefaults.synchronize()
-    }
-    
-    func goFlatIcon() {
-        
-        let requestUrl = URL(string: "http://www.flaticon.com")
-        UIApplication.shared.open(requestUrl!, options: [:], completionHandler: nil)
     }
     
     func contactMe() {
@@ -67,32 +88,14 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         present(composeVC, animated: true, completion: nil)
     }
     
-    func setLimitCost() {
+    func goFlatIcon() {
         
-        let alert = UIAlertController(title: "每月限制金額", message: "請輸入金額 (顯示在圖表上的紅色虛線)", preferredStyle: .alert)
-        
-        // 添加textfield
-        alert.addTextField(configurationHandler: nil)
-        alert.textFields?[0].keyboardType = .numberPad
-        alert.textFields?[0].text = myUserDefaults.string(forKey: "limitCost")
-
-        let okAction = UIAlertAction(title: "確定", style: .default) { (action) in
-            self.myUserDefaults.set(alert.textFields?[0].text, forKey: "limitCost")
-            self.myUserDefaults.synchronize()
-        }
-        
-        let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: nil)
-        
-        alert.addAction(cancelAction)
-        alert.addAction(okAction)
-        present(alert, animated: true, completion: nil)
+        let requestUrl = URL(string: "http://www.flaticon.com")
+        UIApplication.shared.open(requestUrl!, options: [:], completionHandler: nil)
     }
     
-    func popToCustomCategoryVC() {
+    func emailSqliteFile() {
         
-        let customCategoryVC = self.storyboard?.instantiateViewController(withIdentifier: "custom")
-        
-        present(customCategoryVC!, animated: true, completion: nil)
     }
     
     // Mark: - MFMailComposeViewControllerDelegate
@@ -118,17 +121,22 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        return 3
+        return 4
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if section == 0 {
+        switch section {
+        case 0:
             return 2
-        } else if section == 1 {
+        case 1:
             return 2
-        } else if section == 2 {
+        case 2:
             return 1
+        case 3:
+            return 1
+        default:
+            print("wrong section \(section)")
         }
         
         return 0
@@ -142,34 +150,27 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         
         let frame = CGRect(x: 15, y: 0, width: fullSize.width, height: 40)
         
-        if indexPath.section == 0 {
-            
-            if indexPath.row == 0 {
-                let customBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.popToCustomCategoryVC), title: "分類管理", color: UIColor.black)
-                cell.contentView.addSubview(customBtn)
-                
-            } else if indexPath.row == 1 {
-                let limitCostBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.setLimitCost), title: "設定限制金額", color: UIColor.black)
-                cell.contentView.addSubview(limitCostBtn)
-            }
-        
-        } else if indexPath.section == 1 {
-            
-            if indexPath.row == 0 {
-                
-                cell.textLabel?.text = "新增/刪除紀錄音效"
-                cell.accessoryView = mySwitch
-                
-            } else if indexPath.row == 1 {
-                
-                let contactBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.contactMe), title: "寄信給開發者", color: UIColor.black)
-                cell.contentView.addSubview(contactBtn)
-                
-            }
-        } else if indexPath.section == 2 {
-            
+        switch (indexPath.section, indexPath.row) {
+        case (0, 0):
+            let customBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.popToCustomCategoryVC), title: "分類管理", color: UIColor.black)
+            cell.contentView.addSubview(customBtn)
+        case (0, 1):
+            let limitCostBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.setLimitCost), title: "設定限制金額", color: UIColor.black)
+            cell.contentView.addSubview(limitCostBtn)
+        case (1, 0):
+            cell.textLabel?.text = "新增/刪除紀錄音效"
+            cell.accessoryView = mySwitch
+        case (1, 1):
+            let contactBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.contactMe), title: "寄信給開發者", color: UIColor.black)
+            cell.contentView.addSubview(contactBtn)
+        case (2, 0):
             let flatIconBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.goFlatIcon), title: "FLATICON", color: UIColor.black)
             cell.contentView.addSubview(flatIconBtn)
+        case (3, 0):
+                let emailSqliteBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.emailSqliteFile), title: "備份", color: UIColor.black)
+                cell.contentView.addSubview(emailSqliteBtn)
+        default:
+            print("wrong section \(indexPath.section)")
         }
         
         return cell
@@ -179,6 +180,16 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         
         if section == 2 {
             return "圖片來源"
+        } else if section == 3 {
+            return "檔案備份"
+        }
+        
+        return ""
+    }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 3 {
+            return "如何回復備份？\n1.找到備份檔案\n2.點擊文件\n3.選擇\"拷貝到記帳小幫手\""
         }
         
         return ""
@@ -191,6 +202,13 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         // 取消 cell 的選取狀態
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    // Returns the URL to the application's Documents directory.
+    func applicationDocumentsDirectory() -> URL? {
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
+    }
+    
+    
 }
 
 
