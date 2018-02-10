@@ -32,6 +32,9 @@
 		01E983411F0E51740021FEED /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E983401F0E51740021FEED /* BaseVC.swift */; };
 		01F7D8BF1F1F15550064201B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01F7D8BE1F1F15550064201B /* Assets.xcassets */; };
 		951B792B7DA8CD4C428DF44B /* Pods_myAccountBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC9E64C30F3DF944D8C622E /* Pods_myAccountBook.framework */; };
+		DD6E8CA0202F0C46006630FC /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD6E8C9F202F0C46006630FC /* URL+Extension.swift */; };
+		DDC0BE661FEE298500C86F0A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC0BE651FEE298500C86F0A /* Constants.swift */; };
+		DDF36D641FEF4D4F005A22AC /* AlertHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF36D631FEF4D4F005A22AC /* AlertHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +68,9 @@
 		01F7D8BE1F1F15550064201B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		40DF895F42E6C038CA10C933 /* Pods-myAccountBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myAccountBook.release.xcconfig"; path = "Pods/Target Support Files/Pods-myAccountBook/Pods-myAccountBook.release.xcconfig"; sourceTree = "<group>"; };
 		6DC9E64C30F3DF944D8C622E /* Pods_myAccountBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_myAccountBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD6E8C9F202F0C46006630FC /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
+		DDC0BE651FEE298500C86F0A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DDF36D631FEF4D4F005A22AC /* AlertHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertHelper.swift; sourceTree = "<group>"; };
 		EB6BD8F49A28009EBA02B1A3 /* Pods-myAccountBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myAccountBook.debug.xcconfig"; path = "Pods/Target Support Files/Pods-myAccountBook/Pods-myAccountBook.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +93,7 @@
 				0119543A1F0CEF4700E96163 /* DateFormatter+Extension.swift */,
 				01E983361F0D2D980021FEED /* UIButton+Extension.swift */,
 				01E9833C1F0E056A0021FEED /* String+Extension.swift */,
+				DD6E8C9F202F0C46006630FC /* URL+Extension.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -162,6 +169,7 @@
 				01E9833A1F0D34D60021FEED /* ChartVC.swift */,
 				016B86C41F1DEF4700686889 /* CustomCategoryVC.swift */,
 				004FD7A01FDE7DB000CA98C4 /* SQLiteManager.swift */,
+				DDF36D631FEF4D4F005A22AC /* AlertHelper.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -179,6 +187,7 @@
 		01F39F5B1DDDF48D00B93C21 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DDC0BE651FEE298500C86F0A /* Constants.swift */,
 				01A974D61DCB39BD00B522CD /* AppDelegate.swift */,
 				01F7D8BE1F1F15550064201B /* Assets.xcassets */,
 				01A974E51DCB39BD00B522CD /* Info.plist */,
@@ -331,12 +340,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				01E9833F1F0E4B710021FEED /* MyIndexFormatter.swift in Sources */,
+				DDC0BE661FEE298500C86F0A /* Constants.swift in Sources */,
 				01B851A31EFA1E330067540E /* MainVC+Extension.swift in Sources */,
 				01E9833B1F0D34D60021FEED /* ChartVC.swift in Sources */,
 				016B86C51F1DEF4700686889 /* CustomCategoryVC.swift in Sources */,
+				DD6E8CA0202F0C46006630FC /* URL+Extension.swift in Sources */,
 				01A974ED1DCB3AD800B522CD /* Record+CoreDataClass.swift in Sources */,
 				0119543B1F0CEF4700E96163 /* DateFormatter+Extension.swift in Sources */,
 				01E983411F0E51740021FEED /* BaseVC.swift in Sources */,
+				DDF36D641FEF4D4F005A22AC /* AlertHelper.swift in Sources */,
 				01E9833D1F0E056B0021FEED /* String+Extension.swift in Sources */,
 				01E983371F0D2D980021FEED /* UIButton+Extension.swift in Sources */,
 				01A974D91DCB39BD00B522CD /* MainVC.swift in Sources */,

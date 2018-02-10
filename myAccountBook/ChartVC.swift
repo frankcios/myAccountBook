@@ -39,6 +39,7 @@ class ChartVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUI), name: NSNotification.Name(rawValue: refreshChartNotification), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

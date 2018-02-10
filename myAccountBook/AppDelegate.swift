@@ -116,10 +116,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let mainViewController = storyboard.instantiateViewController(withIdentifier: "MainVC") as! MainVC
         
+        let sqlmanager = SQLiteManager.sharedInstance
+        
         if url.isFileURL {
-           mainViewController.handleOpenURL()
+           sqlmanager.handleOpenURL(url: url)
         }
         return true
+    }
+    
+    /**  找到最上層的ViewController */
+    func findViewController() -> UIViewController? {
+        guard let window = window else { return nil }
+        guard var lastVC = window.rootViewController else { return nil }
+        
+        while lastVC.presentedViewController != nil {
+            lastVC = lastVC.presentedViewController!
+        }
+        
+        if lastVC is UINavigationController {
+            return (lastVC as! UINavigationController).topViewController
+        }
+        else if lastVC is UITabBarController {
+            return (lastVC as! UITabBarController).selectedViewController
+        }
+        else if lastVC is UISplitViewController {
+            return (lastVC as! UISplitViewController).viewControllers.last
+        }
+        else {
+            return lastVC
+        }
     }
 }
 

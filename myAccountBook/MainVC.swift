@@ -37,6 +37,16 @@ class MainVC: BaseVC {
         return false
     }
     
+//    lazy var spinner: UIActivityIndicatorView = {
+//        let indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+//        indicator.center = (ad.findViewController()?.view.center)!
+//        indicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+//        indicator.color = UIColor.blue
+//        ad.findViewController()?.view.addSubview(indicator)
+////        ad.findViewController()?.view.bringSubview(toFront: indicator)
+//        return indicator
+//    }()
+    
     @IBAction func previousBtnPressed(_ sender: UIButton!) {
         var dateComponets = DateComponents()
         dateComponets.month = -1
@@ -58,6 +68,10 @@ class MainVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(updateRecordsList), name: NSNotification.Name(rawValue: refreshRecordNotification), object: nil)
+        
+        print(NSPersistentContainer.defaultDirectoryURL())
+
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -69,8 +83,6 @@ class MainVC: BaseVC {
         
         // 初次設定分類
         myUserDefaults.set(customCategories, forKey: "customCategories")
-        
-        print(NSPersistentContainer.defaultDirectoryURL())
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -204,9 +216,6 @@ class MainVC: BaseVC {
         currentMonthLbl.text = dateFormatter.stringWith(format: "yyyy 年 MM 月", date: currentDate)
         updateRecordsList()
     }
-    
-    func handleOpenURL() {
-        
-    }
+
 }
 

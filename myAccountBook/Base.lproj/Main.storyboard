@@ -306,6 +306,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="0FF-5T-77K"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="JxU-1X-eXq"/>
+                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="isy-hW-HmT">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>

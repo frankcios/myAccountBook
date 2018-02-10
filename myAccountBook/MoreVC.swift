@@ -96,6 +96,54 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
     
     func emailSqliteFile() {
         
+        // We must always check whether the current device is configured for sending emails
+        if MFMailComposeViewController.canSendMail() {
+            
+            displayComposerSheet()
+            
+        } else {
+            AlertHelper.shared.alertWith(controller: self, title: "Email Failure", message: "Your device is not setup to send Email!\nPlease Activiate Email Through Settings.", buttonTitle: ["OK"], completionHandler: nil)
+        }
+        
+    }
+    
+    // Displays an email composition interface inside the application. Populates all the Mail fields.
+    func displayComposerSheet() {
+        
+        // Attach The CSV File to the email
+        let tempFileName = "myAccountBook.sqlite";
+        guard let supDirectory =  FileManager().urls(for: .applicationSupportDirectory, in: .userDomainMask).last else { return }
+
+        let tempFile = supDirectory.appendingPathComponent(tempFileName)
+        print("file path: \(tempFile.path)")
+
+        let fileExists = FileManager().fileExists(atPath: tempFile.path)
+      
+        if (!fileExists)
+        {
+            AlertHelper.shared.alertWith(controller: self, title: "提示", message: "備份檔案不存在", buttonTitle: ["OK"], completionHandler: nil)
+
+            print("File does not Exists")
+            return
+        }
+        
+        
+        let picker = MFMailComposeViewController()
+        picker.mailComposeDelegate = self
+        
+        picker.setSubject("myAccountBook Backup")
+        picker.setToRecipients(["pk15678@yahoo.com.tw"])
+//        picker.setCcRecipients(["pk15678@gmail.com", "pk15678@yahoo.com.tw"])
+        
+        
+        guard let data = try? Data(contentsOf: tempFile) else { return }
+        let time = DateFormatter().stringWith(format: "yyyyMMdd_HHmm", date: currentDate)
+        picker.addAttachmentData(data ,mimeType: "application/x-sqlite3", fileName: "myAccountBook_\(time).sqlite")
+
+        picker.setMessageBody("", isHTML: false)
+        
+        // present
+        present(picker, animated: true, completion: nil)
     }
     
     // Mark: - MFMailComposeViewControllerDelegate
@@ -110,6 +158,7 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
             print("Mail Saved")
         case .sent:
             print("Mail Sent")
+            SQLiteManager.sharedInstance.removeAllSQLiteInboxFiles()
         case .failed:
             print("Mail sent failure: \(error.debugDescription)")
         }
@@ -202,12 +251,6 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         // 取消 cell 的選取狀態
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    // Returns the URL to the application's Documents directory.
-    func applicationDocumentsDirectory() -> URL? {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last
-    }
-    
     
 }
 
