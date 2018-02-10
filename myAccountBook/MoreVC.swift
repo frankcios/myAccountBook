@@ -179,7 +179,7 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         case 0:
             return 2
         case 1:
-            return 2
+            return 3
         case 2:
             return 1
         case 3:
@@ -212,6 +212,11 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         case (1, 1):
             let contactBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.contactMe), title: "寄信給開發者", color: UIColor.black)
             cell.contentView.addSubview(contactBtn)
+        case (1, 2):
+            cell.textLabel?.text = "版本"
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 44))
+            label.text = "\(version!)"
+            cell.accessoryView = label
         case (2, 0):
             let flatIconBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.goFlatIcon), title: "FLATICON", color: UIColor.black)
             cell.contentView.addSubview(flatIconBtn)
