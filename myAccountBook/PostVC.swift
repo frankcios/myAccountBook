@@ -10,12 +10,19 @@ import UIKit
 import CoreData
 import AVFoundation
 
+protocol PostVCDelegate {
+    func updateRecordsList()
+}
+
+
 class PostVC: BaseVC {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
     @IBOutlet weak var createTimeTextField: UITextField!
     @IBOutlet weak var descriptionTextField: UITextField!
+    
+    var delegate: MainVC!
     
     override var prefersStatusBarHidden: Bool {
         return false
@@ -82,6 +89,7 @@ class PostVC: BaseVC {
         tapRecongnizer.delegate = self
         tapRecongnizer.cancelsTouchesInView = false
         
+        createTimeTextField.tintColor = .clear
         // 取得現在時間
         createTimeTextField.text = dateFormatter.stringWith(format: "yyyy-MM-dd HH:mm", date: currentDate)
         // 把DatePicker嵌入在TextField中
@@ -93,6 +101,9 @@ class PostVC: BaseVC {
         tap.cancelsTouchesInView = false
         // 為視圖加入監聽手勢
         self.view.addGestureRecognizer(tap)
+        
+        // 設定代理
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -149,8 +160,9 @@ class PostVC: BaseVC {
                 record = Record(context: context)
             
                 // ID Auto increment
+                print("lastRecordID:", ad.getLastRecordID())
                 var seq: Int32 = 1
-                let idSeq = myUserDefaults.integer(forKey: "seq")
+                let idSeq = ad.getLastRecordID()
                 seq = Int32(idSeq + 1)
                 
                 // 設定欄位值
@@ -177,7 +189,12 @@ class PostVC: BaseVC {
                 let fetchRequest: NSFetchRequest = Record.fetchRequest()
                 let results = try! context.fetch(fetchRequest)
                 
+                var count = 0
+                // 將已存在紀錄拿出來修改
+                /// bug fixes: ID duplicate
                 for record in results where record.id == recordID {
+                    count += 1
+                    print("迴圈繞了\(count)次")
                     record.title = titleTextField.text!
                     record.amount = Double(amountTextField.text!)!
                     record.createTime = createTimeTextField.text!

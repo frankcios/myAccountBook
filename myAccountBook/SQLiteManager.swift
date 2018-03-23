@@ -14,11 +14,10 @@ class SQLiteManager: NSObject {
 
     static let sharedInstance: SQLiteManager = {
         let instance = SQLiteManager()
-        
         return instance
     }()
     
-    override init() {
+    override private init() {
         super.init()
     }
     
@@ -35,7 +34,7 @@ class SQLiteManager: NSObject {
             // retrieve the store URL
             guard let persistentStore = context.persistentStoreCoordinator?.persistentStores.last else { return }
             guard let storeURL = context.persistentStoreCoordinator?.url(for: persistentStore) else { return }
-            print(storeURL)
+            print("storeURL: \(storeURL)")
             
             context.performAndWait {
                 context.reset()

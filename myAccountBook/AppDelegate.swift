@@ -143,6 +143,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return lastVC
         }
     }
+    
+    func getLastRecordID() -> Int32 {
+        
+        var lastRecordID: Int32 = 0
+        
+        let fetchRequest: NSFetchRequest = Record.fetchRequest()
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            for result in results {
+                if result.id > lastRecordID {
+                    lastRecordID = result.id
+
+                }
+            }
+        } catch {
+            fatalError("\(error)")
+        }
+        
+        return lastRecordID
+    }
 }
 
 // 建立託管物件內容

@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import CoreData
 
 class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate  {
     
@@ -110,11 +111,12 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
     // Displays an email composition interface inside the application. Populates all the Mail fields.
     func displayComposerSheet() {
         
-        // Attach The CSV File to the email
+        // Attach sqlite file to the email
         let tempFileName = "myAccountBook.sqlite";
         guard let supDirectory =  FileManager().urls(for: .applicationSupportDirectory, in: .userDomainMask).last else { return }
+        let storeURL = NSPersistentContainer.defaultDirectoryURL()
 
-        let tempFile = supDirectory.appendingPathComponent(tempFileName)
+        let tempFile = storeURL.appendingPathComponent(tempFileName)
         print("file path: \(tempFile.path)")
 
         let fileExists = FileManager().fileExists(atPath: tempFile.path)
@@ -137,7 +139,7 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         
         
         guard let data = try? Data(contentsOf: tempFile) else { return }
-        let time = DateFormatter().stringWith(format: "yyyyMMdd_HHmm", date: currentDate)
+        let time = DateFormatter().stringWith(format: "yyyyMMdd_HHmmss", date: currentDate)
         picker.addAttachmentData(data ,mimeType: "application/x-sqlite3", fileName: "myAccountBook_\(time).sqlite")
 
         picker.setMessageBody("", isHTML: false)
@@ -217,6 +219,7 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 44))
             label.text = "\(version!)"
             cell.accessoryView = label
+            cell.selectionStyle = .none
         case (2, 0):
             let flatIconBtn = UIButton.buttonWith(frame: frame, target: self, action: #selector(MoreVC.goFlatIcon), title: "FLATICON", color: UIColor.black)
             cell.contentView.addSubview(flatIconBtn)

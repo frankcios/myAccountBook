@@ -8,13 +8,11 @@
 
 import UIKit
 
-class AlertHelper: NSObject {
+class AlertHelper {
     
     static let shared = AlertHelper()
     
-    override init() {
-        super.init()
-    }
+    private init() {}
     
     func alertWith(controller: UIViewController, title: String?, message: String?, buttonTitle: [String]?, buttonStyle: [UIAlertActionStyle]? = nil, completionHandler: ((NSInteger) -> ())?) {
         

@@ -14,7 +14,7 @@ import UserNotifications
 // 限制金額線
 let limitCost = 5000.0
 
-class MainVC: BaseVC {
+class MainVC: BaseVC, PostVCDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var currentMonthLbl: UILabel!
@@ -36,16 +36,6 @@ class MainVC: BaseVC {
     override var prefersStatusBarHidden: Bool {
         return false
     }
-    
-//    lazy var spinner: UIActivityIndicatorView = {
-//        let indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
-//        indicator.center = (ad.findViewController()?.view.center)!
-//        indicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-//        indicator.color = UIColor.blue
-//        ad.findViewController()?.view.addSubview(indicator)
-////        ad.findViewController()?.view.bringSubview(toFront: indicator)
-//        return indicator
-//    }()
     
     @IBAction func previousBtnPressed(_ sender: UIButton!) {
         var dateComponets = DateComponents()
@@ -102,6 +92,7 @@ class MainVC: BaseVC {
         myUserDefaults.synchronize()
         
         updateRecordsList()
+        print("myRecord: \(myRecords)")
     }
     
     func setupViews() {
@@ -157,7 +148,7 @@ class MainVC: BaseVC {
             let results = try context.fetch(fetchRequest)
             
             for result in results where result.yearMonth == "\(yearMonth)" {
-                
+                print("result:", result)
                 total += result.value(forKey: "amount") as! Double
                 let id = result.value(forKey: "id") as! Int32
                 let title = result.value(forKey: "title") as! String
@@ -216,6 +207,7 @@ class MainVC: BaseVC {
         currentMonthLbl.text = dateFormatter.stringWith(format: "yyyy 年 MM 月", date: currentDate)
         updateRecordsList()
     }
-
+    
+    
 }
 

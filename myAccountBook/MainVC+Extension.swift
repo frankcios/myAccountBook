@@ -101,6 +101,8 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         myUserDefaults.set(records[indexPath.row]["id"]!, forKey: "postID")
         myUserDefaults.synchronize()
         
+        print("recordID: \(records[indexPath.row]["id"]!)")
+        
         performSegue(withIdentifier: "PostVC", sender: nil)
     }
     
