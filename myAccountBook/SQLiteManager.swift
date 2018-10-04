@@ -9,17 +9,12 @@
 import UIKit
 import CoreData
 
-class SQLiteManager: NSObject {
+class SQLiteManager {
     let manager = FileManager.default
 
-    static let sharedInstance: SQLiteManager = {
-        let instance = SQLiteManager()
-        return instance
-    }()
+    static let sharedInstance = SQLiteManager()
     
-    override private init() {
-        super.init()
-    }
+    private init() {}
     
     // Returns the URL to the application's Documents directory.
     func applicationSupportDirectory() -> URL? {
@@ -146,7 +141,7 @@ class SQLiteManager: NSObject {
         print("handle url:", url)
         AlertHelper.shared.alertWith(controller: ad.findViewController()!, title: "您確定要回復嗎？", message: "回復將刪除當前數據", buttonTitle: ["不", "確定"], buttonStyle: [.destructive, .default]) { (index) in
             if (index == 1) {
-                self.performSelector(onMainThread: #selector(self.restoreFromAttachedEmail(url:)), with: url, waitUntilDone: false)
+                self.restoreFromAttachedEmail(url: url)
             }
         }
 

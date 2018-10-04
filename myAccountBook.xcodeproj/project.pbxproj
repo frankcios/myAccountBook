@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		004FD7A11FDE7DB000CA98C4 /* SQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004FD7A01FDE7DB000CA98C4 /* SQLiteManager.swift */; };
+		00AC718221664CD500A33B1B /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AC718121664CD500A33B1B /* UIDevice+Extension.swift */; };
+		00AC718421664CE700A33B1B /* CoreData+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AC718321664CE700A33B1B /* CoreData+Extension.swift */; };
 		0119543B1F0CEF4700E96163 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119543A1F0CEF4700E96163 /* DateFormatter+Extension.swift */; };
-		0119543D1F0CF54100E96163 /* PostVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0119543C1F0CF54100E96163 /* PostVC+Extension.swift */; };
 		014887F51F0F85F10002E331 /* MyAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014887F41F0F85F10002E331 /* MyAxisValueFormatter.swift */; };
 		015A5FE81F6E29F9003D91B1 /* RecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015A5FE71F6E29F9003D91B1 /* RecordCell.swift */; };
 		016B86C51F1DEF4700686889 /* CustomCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B86C41F1DEF4700686889 /* CustomCategoryVC.swift */; };
@@ -24,7 +25,6 @@
 		01A974E41DCB39BD00B522CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01A974E21DCB39BD00B522CD /* LaunchScreen.storyboard */; };
 		01A974ED1DCB3AD800B522CD /* Record+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A974EB1DCB3AD800B522CD /* Record+CoreDataClass.swift */; };
 		01A974F31DCB414400B522CD /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A974F21DCB414400B522CD /* PostVC.swift */; };
-		01B851A31EFA1E330067540E /* MainVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B851A21EFA1E330067540E /* MainVC+Extension.swift */; };
 		01E983371F0D2D980021FEED /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E983361F0D2D980021FEED /* UIButton+Extension.swift */; };
 		01E9833B1F0D34D60021FEED /* ChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9833A1F0D34D60021FEED /* ChartVC.swift */; };
 		01E9833D1F0E056B0021FEED /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E9833C1F0E056A0021FEED /* String+Extension.swift */; };
@@ -39,8 +39,9 @@
 
 /* Begin PBXFileReference section */
 		004FD7A01FDE7DB000CA98C4 /* SQLiteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteManager.swift; sourceTree = "<group>"; };
+		00AC718121664CD500A33B1B /* UIDevice+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
+		00AC718321664CE700A33B1B /* CoreData+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreData+Extension.swift"; sourceTree = "<group>"; };
 		0119543A1F0CEF4700E96163 /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
-		0119543C1F0CF54100E96163 /* PostVC+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostVC+Extension.swift"; sourceTree = "<group>"; };
 		014887F41F0F85F10002E331 /* MyAxisValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAxisValueFormatter.swift; sourceTree = "<group>"; };
 		015A5FE71F6E29F9003D91B1 /* RecordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordCell.swift; sourceTree = "<group>"; };
 		016B86C41F1DEF4700686889 /* CustomCategoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCategoryVC.swift; sourceTree = "<group>"; };
@@ -57,7 +58,6 @@
 		01A974E51DCB39BD00B522CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01A974EB1DCB3AD800B522CD /* Record+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Record+CoreDataClass.swift"; sourceTree = "<group>"; };
 		01A974F21DCB414400B522CD /* PostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
-		01B851A21EFA1E330067540E /* MainVC+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainVC+Extension.swift"; sourceTree = "<group>"; };
 		01E983361F0D2D980021FEED /* UIButton+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		01E983381F0D323F0021FEED /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
 		01E983391F0D323F0021FEED /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -87,6 +87,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00AC718521664E0F00A33B1B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				004FD7A01FDE7DB000CA98C4 /* SQLiteManager.swift */,
+				DDF36D631FEF4D4F005A22AC /* AlertHelper.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		014887F81F112C060002E331 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +103,8 @@
 				01E983361F0D2D980021FEED /* UIButton+Extension.swift */,
 				01E9833C1F0E056A0021FEED /* String+Extension.swift */,
 				DD6E8C9F202F0C46006630FC /* URL+Extension.swift */,
+				00AC718321664CE700A33B1B /* CoreData+Extension.swift */,
+				00AC718121664CD500A33B1B /* UIDevice+Extension.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -140,6 +151,7 @@
 				01DCE9D61EDEBD7700CBCEC6 /* View */,
 				01A974EF1DCB3B9900B522CD /* CoreData */,
 				01A974F11DCB3BC500B522CD /* Controller */,
+				00AC718521664E0F00A33B1B /* Helpers */,
 				014887F81F112C060002E331 /* Extension */,
 				017205CC1F22F5CC0040D55E /* Formatter */,
 				01F39F5B1DDDF48D00B93C21 /* Supporting Files */,
@@ -162,14 +174,10 @@
 			children = (
 				01E983401F0E51740021FEED /* BaseVC.swift */,
 				01A974D81DCB39BD00B522CD /* MainVC.swift */,
-				01B851A21EFA1E330067540E /* MainVC+Extension.swift */,
 				01A974F21DCB414400B522CD /* PostVC.swift */,
-				0119543C1F0CF54100E96163 /* PostVC+Extension.swift */,
 				017158421DD8398B003D3652 /* MoreVC.swift */,
 				01E9833A1F0D34D60021FEED /* ChartVC.swift */,
 				016B86C41F1DEF4700686889 /* CustomCategoryVC.swift */,
-				004FD7A01FDE7DB000CA98C4 /* SQLiteManager.swift */,
-				DDF36D631FEF4D4F005A22AC /* AlertHelper.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -341,7 +349,8 @@
 			files = (
 				01E9833F1F0E4B710021FEED /* MyIndexFormatter.swift in Sources */,
 				DDC0BE661FEE298500C86F0A /* Constants.swift in Sources */,
-				01B851A31EFA1E330067540E /* MainVC+Extension.swift in Sources */,
+				00AC718221664CD500A33B1B /* UIDevice+Extension.swift in Sources */,
+				00AC718421664CE700A33B1B /* CoreData+Extension.swift in Sources */,
 				01E9833B1F0D34D60021FEED /* ChartVC.swift in Sources */,
 				016B86C51F1DEF4700686889 /* CustomCategoryVC.swift in Sources */,
 				DD6E8CA0202F0C46006630FC /* URL+Extension.swift in Sources */,
@@ -353,7 +362,6 @@
 				01E983371F0D2D980021FEED /* UIButton+Extension.swift in Sources */,
 				01A974D91DCB39BD00B522CD /* MainVC.swift in Sources */,
 				017158431DD8398B003D3652 /* MoreVC.swift in Sources */,
-				0119543D1F0CF54100E96163 /* PostVC+Extension.swift in Sources */,
 				015A5FE81F6E29F9003D91B1 /* RecordCell.swift in Sources */,
 				014887F51F0F85F10002E331 /* MyAxisValueFormatter.swift in Sources */,
 				01A974DF1DCB39BD00B522CD /* myAccountBook.xcdatamodeld in Sources */,

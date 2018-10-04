@@ -10,6 +10,10 @@ import UIKit
 import CoreData
 import UserNotifications
 
+// 建立託管物件內容
+let ad = UIApplication.shared.delegate as! AppDelegate
+let context = ad.persistentContainer.viewContext
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -36,10 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // doNothing
         })
         
-        tabBarVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "tabBarVC") as? UITabBarController
-        
         return true
-        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -166,16 +167,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return lastRecordID
     }
 }
-
-// 建立託管物件內容
-let ad = UIApplication.shared.delegate as! AppDelegate
-let context = ad.persistentContainer.viewContext
-
-let build = Bundle.main.infoDictionary!["CFBundleVersion"]
-let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"]
-let majorVersion = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
-let minorVersion = ProcessInfo.processInfo.operatingSystemVersion.minorVersion
-let patchVersion = ProcessInfo.processInfo.operatingSystemVersion.patchVersion
-let systemVersion = "\(majorVersion).\(minorVersion).\(patchVersion)"
-
-var tabBarVC: UITabBarController?

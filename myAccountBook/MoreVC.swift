@@ -83,7 +83,7 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         
         composeVC.setSubject("聯絡開發者")
         composeVC.setToRecipients(["pk15678@gmail.com"])
-        composeVC.setMessageBody("\n\n\n System Version: \(systemVersion)\n App Version: \(version!)", isHTML: false)
+        composeVC.setMessageBody("\n\n\n Model Name: \(deviceName)\n System Version: \(systemVersion)\n App Version: \(version!)", isHTML: false)
         
         // present
         present(composeVC, animated: true, completion: nil)
@@ -110,42 +110,47 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
     
     // Displays an email composition interface inside the application. Populates all the Mail fields.
     func displayComposerSheet() {
-        
-        // Attach sqlite file to the email
-        let tempFileName = "myAccountBook.sqlite";
-        guard let supDirectory =  FileManager().urls(for: .applicationSupportDirectory, in: .userDomainMask).last else { return }
-        let storeURL = NSPersistentContainer.defaultDirectoryURL()
 
-        let tempFile = storeURL.appendingPathComponent(tempFileName)
-        print("file path: \(tempFile.path)")
+        guard let storeCoordinator = context.persistentStoreCoordinator else { return }
+        do {
+            let backupFile = try storeCoordinator.backupPersistentStore(atIndex: 0)
+            defer {
+                // Delete temporary directory when done
+                try! backupFile.deleteDirectory()
+            }
+            print("The backup is at \"\(backupFile.fileURL.path)\"")
 
-        let fileExists = FileManager().fileExists(atPath: tempFile.path)
-      
-        if (!fileExists)
-        {
-            AlertHelper.shared.alertWith(controller: self, title: "提示", message: "備份檔案不存在", buttonTitle: ["OK"], completionHandler: nil)
+            // Do something with backupFile.fileURL
+            // Move it to a permanent location, send it to the cloud, etc.
+            // ...
 
-            print("File does not Exists")
-            return
+            let fileExists = FileManager().fileExists(atPath: backupFile.fileURL.path)
+            if (!fileExists)
+            {
+                AlertHelper.shared.alertWith(controller: self, title: "提示", message: "備份檔案不存在", buttonTitle: ["OK"], completionHandler: nil)
+
+                print("File does not Exists")
+                return
+            }
+
+            let picker = MFMailComposeViewController()
+            picker.mailComposeDelegate = self
+
+            picker.setSubject("myAccountBook Backup")
+            picker.setToRecipients(["pk15678@yahoo.com.tw"])
+
+            guard let data = try? Data(contentsOf: backupFile.fileURL) else { return }
+            let time = DateFormatter().stringWith(format: "yyyyMMdd_HHmm", date: currentDate)
+            picker.addAttachmentData(data, mimeType: "application/x-sqlite3", fileName: "myAccountBook_\(time).sqlite")
+
+            picker.setMessageBody("", isHTML: false)
+
+            // present
+            present(picker, animated: true, completion: nil)
+
+        } catch {
+            print("Error backing up Core Data store: \(error)")
         }
-        
-        
-        let picker = MFMailComposeViewController()
-        picker.mailComposeDelegate = self
-        
-        picker.setSubject("myAccountBook Backup")
-        picker.setToRecipients(["pk15678@yahoo.com.tw"])
-//        picker.setCcRecipients(["pk15678@gmail.com", "pk15678@yahoo.com.tw"])
-        
-        
-        guard let data = try? Data(contentsOf: tempFile) else { return }
-        let time = DateFormatter().stringWith(format: "yyyyMMdd_HHmmss", date: currentDate)
-        picker.addAttachmentData(data ,mimeType: "application/x-sqlite3", fileName: "myAccountBook_\(time).sqlite")
-
-        picker.setMessageBody("", isHTML: false)
-        
-        // present
-        present(picker, animated: true, completion: nil)
     }
     
     // Mark: - MFMailComposeViewControllerDelegate
@@ -218,6 +223,7 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
             cell.textLabel?.text = "版本"
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 40, height: 44))
             label.text = "\(version!)"
+            label.textAlignment = .right
             cell.accessoryView = label
             cell.selectionStyle = .none
         case (2, 0):
