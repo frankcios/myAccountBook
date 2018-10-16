@@ -75,6 +75,8 @@ class MoreVC: BaseVC, UITableViewDelegate, UITableViewDataSource, MFMailComposeV
         
         if !MFMailComposeViewController.canSendMail() {
             print("Mail services are not available")
+            
+            AlertHelper.shared.alertWith(controller: self, title: "Email Failure", message: "Your device is not setup to send Email!\nPlease Activiate Email Through Settings.", buttonTitle: ["OK"], completionHandler: nil)
             return
         }
         
